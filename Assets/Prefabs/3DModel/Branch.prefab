@@ -137,6 +137,7 @@ MonoBehaviour:
   deleteTransform: {fileID: 1574189142172136130}
   finishTransform: {fileID: 258543568663208167}
   distance: 0.5
+  title: {fileID: 2947148301152956989}
   dummy:
   - title: 
     contributor: 

@@ -14,7 +14,7 @@ namespace Model
     /// 작성자 : 곽진성
     /// 기능 : 커밋 모델링
     /// </summary>
-    public class Commit : MonoBehaviour
+    public class CommitModel : MonoBehaviour
     {
         [SerializeField] Material add;
         [SerializeField] Material modify;
