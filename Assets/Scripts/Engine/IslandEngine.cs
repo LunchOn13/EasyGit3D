@@ -21,6 +21,12 @@ public class IslandEngine
     private Boolean isOutput = false;
 
 
+    /// <summary>
+    /// 환경변수에서 git 경로를 가져와서 실행시킨다.
+    /// </summary>
+    /// <returns>
+    /// string인 컴퓨터 환경변수상의 git 경로를 가져온다.
+    /// </returns>
     public string FindGitPath()
     {
         string a = Environment.GetEnvironmentVariable("path");
@@ -30,7 +36,7 @@ public class IslandEngine
         {
             if (e.Contains("Git\\cmd") || e.Contains("git\\cmd"))
             {
-                // 여러개가 나오는 경우는 아직 모르는 레후;;
+                // 여러개가 나오는 경우는 아직 모른다
                 string[] contents = e.Split('\\');
                 foreach (string k in contents)
                 {
@@ -78,17 +84,15 @@ public class IslandEngine
         bashInfo.CreateNoWindow = true;
 
         // 테스트용 경로임 삭제할 것
-        bashInfo.WorkingDirectory = "C:\\Users\\crusi\\Documents\\GitHub\\Swimming_on_git";
+        bashInfo.WorkingDirectory = "F:\\Swimming_on_git";
 
         bashInfo.RedirectStandardOutput = true;
         outputString = new StringBuilder();
-
 
         bashInfo.RedirectStandardInput = true;
 
         bash.StartInfo = bashInfo;
         bash.OutputDataReceived += OutputHandler;
-
     }
 
     /// <summary>
