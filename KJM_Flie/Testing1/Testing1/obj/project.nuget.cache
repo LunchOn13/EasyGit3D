@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "v8ZhdfKxQCohbITg68458yH/dus05xXfTyNM1/yW0E9el3XjDefihpdmdkHX8N7pQsMb6TsW+xQflXmaj97ajA==",
+  "dgSpecHash": "UG9UVmiQ9E83ar5D76cg9BDGoW33Eey5WXHvJfSlVDbv8mhz7X+80ohk1+0Vz2CWnHWkHLl3THqmo9CGqrkwow==",
   "success": true,
   "projectFilePath": "C:\\Users\\82103\\Desktop\\Swimming_on_git\\KJM_Flie\\Testing1\\Testing1\\Testing1.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\82103\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

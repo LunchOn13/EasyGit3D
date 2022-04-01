@@ -7,7 +7,9 @@ C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netc
 C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.csprojAssemblyReference.cache
 C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.AssemblyInfoInputs.cache
 C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.AssemblyInfo.cs
-C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.csproj.CoreCompileInputs.cache
 C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.dll
 C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.pdb
 C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.genruntimeconfig.cache
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.csproj.CoreCompileInputs.cache
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.csproj.CopyComplete
