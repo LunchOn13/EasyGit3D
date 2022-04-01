@@ -1,7 +1,6 @@
 
 jeongmo 
 
-commit 
-push 
+파싱............
 
 test중
