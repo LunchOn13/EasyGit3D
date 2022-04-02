@@ -8,42 +8,47 @@ namespace Testing1
     {
         static void example() // input 없이 
         {
-            string text = "ABC\nDEF\tGHI JKL";
-            char[] sep = { '\n', '\t', ' ' };  // 이것들로 토큰을 나눈다
+            string text = "AuthorString\nDataString\tTitleString ExString";
+            char[] sep = { '\n', '\t', ' '};  // 이것들로 토큰을 나눈다
 
             string[] result = text.Split(sep); 
-            foreach (var item in result)
-            {
-                Console.WriteLine(item); // 나눈 토큰을 출력
-            }
+
+            foreach (var item in result)   // 나눈 토큰을 출력
+            {                                    //
+                Console.WriteLine(item); //
+            }                                   //
+
             JObject sonSpec = new JObject(
-                new JProperty("score", 9),
-                new JProperty("name", "손흥민"),
-                new JProperty("number", 7)
+                new JProperty("Author", result[0]),
+                new JProperty("Data", result[1]),
+                new JProperty("Title", result[2]),
+                new JProperty("ExTest", result[3])
             );
-            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\test.json", sonSpec.ToString());
+            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\test1_4.json", sonSpec.ToString());
         }
-        static void example(string input) // input이 있을시  
-        {
-            char[] sep = { '\n', '\t', ' ' }; // 똑같이 input을 나눈다
+        static void example(string input) // input이 입력시  
+        {                       
+            string text = input;
+                                //줄 바꿈 삭제가 안됨...
+            char[] sep = {/*'\r', '\n', '\t',*/ ' '}; 
+            string[] result = text.Split(sep, 15); // input을 ' '로 15개로 나눈다
 
-            string[] result = input.Split(sep);
-
-            foreach (var item in result)
-            {
-                Console.WriteLine(item);
-            }
+            JObject sonSpec = new JObject(          // json 파일의 내용들을 string문자로 만들기
+                  new JProperty("Commit?", result[0].Equals("commit")? "true": "false")
+                  ,new JProperty("Commit_address", result[1])
+                  ,new JProperty("Author", result[3])
+                  ,new JProperty("Date", result[8] +" " +result[9] +" " +result[10] +" " +result[12] )
+                  ,new JProperty("Time", result[11])
+                  ,new JProperty("Title", result[14])
+              );
+            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\test2.json", sonSpec.ToString());
+            // json의 내용이 담긴 내용을 실제 json파일로 생성
         }
-       
         static void Main(string[] args)
         {
-            
-            //string maintext = Console.ReadLine(); // 터미널에서 입력 받을수 있다.
-
-            example();
-            //Console.WriteLine("###HelloWorld###");
-            //example(maintext);
-            Console.WriteLine("HelloWorld!");
+            string text = Console.ReadLine();   // 문자 열을 입력
+            example(text);
+            Console.WriteLine("### Main The End ###");
         }
     }
 }
