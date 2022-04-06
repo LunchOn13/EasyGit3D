@@ -17,6 +17,7 @@ public class IslandEngine
     private ProcessStartInfo bashInfo = new ProcessStartInfo();
 
     private StreamWriter writer;
+    private StreamWriter streamError;
 
     private Boolean isOutput = false;
 
@@ -78,7 +79,7 @@ public class IslandEngine
     private void SetInfo()
     {
         //bashInfo.FileName = "C:\\Program Files (x86)\\Git\\bin\\bash.exe";
-        UnityEngine.Debug.Log(FindGitPath());
+        //UnityEngine.Debug.Log(FindGitPath());
         bashInfo.FileName = FindGitPath();
         bashInfo.UseShellExecute = false;
         bashInfo.CreateNoWindow = true;
@@ -87,12 +88,15 @@ public class IslandEngine
         bashInfo.WorkingDirectory = "F:\\Swimming_on_git";
 
         bashInfo.RedirectStandardOutput = true;
+        bashInfo.RedirectStandardInput = true;
+        bashInfo.RedirectStandardError = true;
         outputString = new StringBuilder();
 
-        bashInfo.RedirectStandardInput = true;
-
         bash.StartInfo = bashInfo;
+
         bash.OutputDataReceived += OutputHandler;
+        bash.ErrorDataReceived += ErrorHandler;
+        //bash.ErrorDataReceived += new DataReceivedEventHandler(ErrorHandler);
     }
 
     /// <summary>
@@ -102,7 +106,13 @@ public class IslandEngine
     {
         SetInfo();
         bash.Start();
+        
+        // 이거 비동기로 읽는 거라는데 잘못 쓰고 있었을지도 모르겠따.
         bash.BeginOutputReadLine();
+
+        // 에러 읽기 ( Progress 읽기 )
+        bash.BeginErrorReadLine();
+        UnityEngine.Debug.Log("start error read line");
     }
 
     /// <summary>
@@ -170,8 +180,27 @@ public class IslandEngine
             // Add the text to the collected output.
             //UnityEngine.Debug.Log(outLine.Data);
             outputString.AppendLine(outLine.Data);
+            //outputString.Append(outLine.Data);
             isOutput = true;
         }
+    }
+
+    /// <summary>
+    /// --progress 옵션을 넣어줘야만 한다.
+    /// 에러 핸들러인데
+    /// git 에서 진행상황 보여줄때 errorstream에다가 적어서
+    /// 표시해준다 그래서 이걸로 봐야함
+    /// git clone --progress 깃주소
+    /// 이런 형식으로 적어야함
+    /// 
+    ///  /// https://docs.microsoft.com/ko-kr/dotnet/api/system.diagnostics.process.errordatareceived?view=net-6.0
+    /// 참조
+    /// </summary>
+    /// <param name=""></param>
+    private void ErrorHandler(object sendingProcess, DataReceivedEventArgs errLine)
+    {
+        UnityEngine.Debug.Log("Error Handler");
+        UnityEngine.Debug.Log(errLine.Data);
     }
 
     /// <summary>
