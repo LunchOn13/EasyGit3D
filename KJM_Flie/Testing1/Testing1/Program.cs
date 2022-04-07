@@ -1,12 +1,25 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Testing1
 {
     class Program
     {
-        
+        static string Log_seting()
+        {
+            string output = "";
+            for (int i = 0; i < 6; i++)
+            {
+                string ins = Console.ReadLine();
+                if (0 != i)
+                    output += ins;
+                output += " ";
+            }
+            return output;
+        }
         static void example() // input 없이 
         {
             string text = "AuthorString\nDataString\tTitleString ExString";
@@ -27,72 +40,59 @@ namespace Testing1
             );
             File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\test1_4.json", sonSpec.ToString());
         }
-
-        // git log 하면 나오는 commi의 정보
-        static void Log_Information(string input) 
+        static void Log_Information() // "git log" 하면 나오는 commi의 정보
         {
-            string text = input;
-            char[] sep = { '\r', '\n', '\t', ' ' };
-            string[] result = text.Split(sep, 15); // input을 ' '로 15개로 나눈다
-
-            JObject sonSpec = new JObject(          // json 파일의 내용들을 string문자로 만들기
-                  new JProperty("CommitMassage", result[14])
-                  , new JProperty("DateAndTime", result[8] + " " + result[9] + " " + result[10] + " " + result[12] +" "+ result[11])
-                  , new JProperty("Author", result[3])
-                  
-              );
-            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Git_Log.json", sonSpec.ToString());
-            // json의 내용이 담긴 내용을 실제 json파일로 생성
-        }
-
-        static void Branch(string input)
-        {
-            char[] sep = { '\r', '\n', '\t', ' ' };
-            string[] result = input.Split(sep);
-
-            int StarIndex = 0;
-            for(int i = 0; i < result.Length; i++)
-                if (result[i].Equals("*")) StarIndex = i;
-
+            string text = Log_seting();
+            string[] result = text.Split(' '); // input을 ' '로 나눈다
             JObject sonSpec = new JObject();
 
-            sonSpec.Add(new JProperty("Check", result[StarIndex + 1]));
+            if(result.Length == 21)
+            {
+                sonSpec.Add(new JProperty("CommitMassage", result[18]));
+                sonSpec.Add(new JProperty("DateAndTime", result[7] + " " + result[8] + " " + result[9] + " " + result[11] + " " + result[10]));
+                sonSpec.Add(new JProperty("Author", result[2]));
+            }
+            else
+            {
+                Console.WriteLine("### 그 외 ###");
+            }
+            // json 파일의 내용들을 string문자로 만들기  
+            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Git_Log.json", sonSpec.ToString());
+            // json의 내용이 담긴 내용을 실제 json파일로 생성
 
             for (int i = 0; i < result.Length; i++)
             {
-                if(!result[i].Equals("*"))
-                    sonSpec.Add(new JProperty("Branchs"+i, result[i]));
+                Console.WriteLine(result[i] + " : " +i);
             }
 
+        }
+        static void Branch(string input) // "git branch" 하면 나오는 것들
+        {
+            JObject sonSpec = new JObject();
+
+            // step 1 먼저 토큰 나누기
+            char[] sep = { '\r', '\n', '\t', ' ' };
+            string[] result = input.Split(sep);
+            List<String> wirtestring = new List<String>();
+
+            // step 2 branch의 경우 check가 어디로 되어있는지 확인 And 
+            int StarIndex = 0;
+            for(int i = 0; i < result.Length; i++)
+            {
+                if (!result[i].Equals("*"))
+                    wirtestring.Add(result[i]);
+            }
+
+            sonSpec.Add(new JProperty("Check", result[StarIndex + 1]));
+            sonSpec.Add(new JProperty("member", wirtestring));
             File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Git_Branch.json", sonSpec.ToString());
         }
 
-
-
         static void Main(string[] args)
         {
-            Console.WriteLine("지금은 test중이라서 임시로 이런 식으로 진행");
-            Console.WriteLine("log, branch 둘중에서 하나만 입력하셈");
-
-            string input1 = Console.ReadLine();
-
-            if (input1.Equals("branch"))
-            {
-                Console.WriteLine("내용 입력");
-                string text = Console.ReadLine();   // 문자 열을 입력
-                // 몇개인지는 나중에 for문 돌리기
-                Branch(text); // git branch 전용
-            }
-            else if (input1.Equals("log"))
-            {
-                string text = Console.ReadLine();   // 문자 열을 입력
-                Log_Information(text); // git log 전용
-            }
-
-
-
-
-
+            string text = Console.ReadLine();   // 문자 열을 입력
+            Branch(text); // git branch 전용
+            //Log_Information(); // git log 전용
         }
     }
 }
