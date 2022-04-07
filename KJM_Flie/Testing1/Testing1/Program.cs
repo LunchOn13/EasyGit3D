@@ -90,8 +90,8 @@ namespace Testing1
 
         static void Main(string[] args)
         {
-            string text = Console.ReadLine();   // 문자 열을 입력
-            Branch(text); // git branch 전용
+            //string text = Console.ReadLine();   // 문자 열을 입력
+            //Branch(text); // git branch 전용
             //Log_Information(); // git log 전용
         }
     }
