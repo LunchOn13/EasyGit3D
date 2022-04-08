@@ -8,7 +8,7 @@ namespace Testing1
 {
     class Program
     {
-        static string Log_seting()
+        static string Log_seting() // 여러줄로 받기 위한 함수
         {
             string output = "";
             for (int i = 0; i < 6; i++)
@@ -90,12 +90,13 @@ namespace Testing1
 
         static void Main(string[] args)
         {
-            //string text = Console.ReadLine();   // 문자 열을 입력
-            //Branch(text); // git branch 전용
+
+            Console.WriteLine("branch의 리스트를 한줄로 받기");
+            string text = Console.ReadLine();   // 문자 열을 입력
+            Branch(text); // git branch 전용
+
+
             //Log_Information(); // git log 전용
         }
     }
 }
-
-//##########################################################################
-//                          무제점 한 라인 만 입력이 되서 엔터가 안먹힘.
