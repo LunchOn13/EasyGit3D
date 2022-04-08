@@ -1,26 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.Diagnostics;
 using System.IO;
 using System;
 using System.Text;
-using System.Threading;
-using System.ComponentModel;
 
 
 public class IslandEngine
 {
-    public static StringBuilder outputString = null;
+    public Output output = new Output();
+    public Error error = new Error();
+    public String inputCommand = "";
 
-    private Process bash = new Process();
-    private ProcessStartInfo bashInfo = new ProcessStartInfo();
+    private readonly Process bash = new Process();
+    private readonly ProcessStartInfo bashInfo = new ProcessStartInfo();
 
     private StreamWriter writer;
-    private StreamWriter streamError;
-
-    private Boolean isOutput = false;
-
 
     /// <summary>
     /// 환경변수에서 git 경로를 가져와서 실행시킨다.
@@ -78,8 +71,6 @@ public class IslandEngine
     /// </summary>
     private void SetInfo()
     {
-        //bashInfo.FileName = "C:\\Program Files (x86)\\Git\\bin\\bash.exe";
-        //UnityEngine.Debug.Log(FindGitPath());
         bashInfo.FileName = FindGitPath();
         bashInfo.UseShellExecute = false;
         bashInfo.CreateNoWindow = true;
@@ -90,7 +81,6 @@ public class IslandEngine
         bashInfo.RedirectStandardOutput = true;
         bashInfo.RedirectStandardInput = true;
         bashInfo.RedirectStandardError = true;
-        outputString = new StringBuilder();
 
         bash.StartInfo = bashInfo;
 
@@ -100,7 +90,7 @@ public class IslandEngine
     }
 
     /// <summary>
-    /// 깃 배쉬를 실행시키고, output을 읽기 시작
+    /// 깃 배쉬를 실행시키고, output과 error를 읽기 시작
     /// </summary>
     public void StartEngine()
     {
@@ -121,29 +111,12 @@ public class IslandEngine
     /// <param name="input"> 깃 배쉬에 입력할 명령어를 그대로 넣을 것</param>
     public void WriteInput(string input)
     {
-        outputString.Clear();
+        output.Clear();
+        error.Clear();
         writer = bash.StandardInput;
+        inputCommand = input;
         writer.WriteLine(input);
         writer.Flush();
-    }
-
-    /// <summary>
-    /// 현재 쓸 수 없음
-    /// output이 string으로 저장되는 속도보다 이걸 호출하는게 빠르면 아무것도 없는게 전달됨
-    /// 
-    /// TODO :: OutputHandler에서 outputString에 원하는 정보가 들어갔는지 확인하고 호출해야함
-    /// </summary>
-    /// <returns></returns>
-    public StringBuilder ReadOutput()
-    {
-        // 이거 호출이 너무 빨라서 아무것도 없는게 감
-        if (CheckOutput())
-        {
-            isOutput = false;
-            return outputString;
-        }
-        else
-            return null;
     }
 
     /// <summary>
@@ -154,16 +127,21 @@ public class IslandEngine
         writer.Close();
         bash.Close();
     }
+    /**
+     * 
+     * 
+     *  git push 했을 때 나오는 값들임 파싱할때 필요할거같아서 기록함
+ Enumerating objects: 27, done.
+Counting objects: 100% (27/27), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (17/17), done.
+Writing objects: 100% (17/17), 4.00 KiB | 4.00 MiB/s, done.
+Total 17 (delta 10), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (10/10), completed with 9 local objects.
+To github.com:LunchOn13/Swimming_on_git.git
+   d874e529..211ce95a  LJW -> LJW
 
-    /// <summary>
-    /// output에 값이 들어있는지 확인한다.
-    /// </summary>
-    /// <returns>output에 값이 있으면 true, 없다면 false</returns>
-    public Boolean CheckOutput()
-    {
-        return isOutput;
-    }
-
+     */
 
     /// <summary>
     /// 깃 배쉬의 output을 가져와서 무엇을 할 것인가~
@@ -173,15 +151,10 @@ public class IslandEngine
     private void OutputHandler(object sendingProcess,
             DataReceivedEventArgs outLine)
     {
-
         // Collect the sort command output.
         if (!String.IsNullOrEmpty(outLine.Data))
         {
-            // Add the text to the collected output.
-            //UnityEngine.Debug.Log(outLine.Data);
-            outputString.AppendLine(outLine.Data);
-            //outputString.Append(outLine.Data);
-            isOutput = true;
+            output.AppendLine(outLine.Data);
         }
     }
 
@@ -199,8 +172,10 @@ public class IslandEngine
     /// <param name=""></param>
     private void ErrorHandler(object sendingProcess, DataReceivedEventArgs errLine)
     {
-        UnityEngine.Debug.Log("Error Handler");
-        UnityEngine.Debug.Log(errLine.Data);
+        if (!String.IsNullOrEmpty(errLine.Data))
+        {
+            error.AppendLine(errLine.Data);
+        }
     }
 
     /// <summary>

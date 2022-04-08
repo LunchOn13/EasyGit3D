@@ -15,14 +15,14 @@ public class testEngine : MonoBehaviour
 
         tmp.WriteInput("git branch --all");
 
-        StringBuilder ttt = tmp.ReadOutput();
+        //StringBuilder ttt = tmp.ReadOutput();
 
-        while (ttt == null)
-        {
-            ttt = tmp.ReadOutput();
-        }
-        UnityEngine.Debug.Log("Done");
-        UnityEngine.Debug.Log(ttt.ToString());
+        //while (ttt == null)
+        //{
+        //    ttt = tmp.ReadOutput();
+        //}
+        //UnityEngine.Debug.Log("Done");
+        //UnityEngine.Debug.Log(ttt.ToString());
 
     }
 

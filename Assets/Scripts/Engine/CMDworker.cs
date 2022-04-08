@@ -5,17 +5,14 @@ using UnityEngine;
 
 public class CMDworker : MonoBehaviour
 {
-
-    public static IslandEngine engine;
+    public static IslandEngine engine = new IslandEngine();
 
     // Start is called before the first frame update
     void Start()
     {
-        engine = new IslandEngine();
-
         engine.StartEngine();
 
-        engine.ReadOutput();
+        //engine.ReadOutput();
     }
 
     /// <summary>
@@ -29,15 +26,25 @@ public class CMDworker : MonoBehaviour
 
     public static void output()
     {
-        StringBuilder builder = engine.ReadOutput();
-
-        while(engine.CheckOutput())
+        if(engine.output.IsReadable())
         {
-            builder = engine.ReadOutput();
+            UnityEngine.Debug.Log("lineofoutput " + engine.output.LineofOutput());
+            UnityEngine.Debug.Log("output is " + engine.output.OutputLines());
         }
 
-        if(builder != null)
-            InputManager.OutputControl(builder.ToString());
+
+        if(engine.error.IsReadable())
+        {
+            UnityEngine.Debug.Log("lineofError " + engine.error.LineofError());
+            UnityEngine.Debug.Log("error is " + engine.error.ErrorLines());
+        }
+
+    }
+
+    public void error(string errorLine)
+    {
+        UnityEngine.Debug.Log(errorLine);
+        InputManager.OutputControl(errorLine);
     }
 
 
