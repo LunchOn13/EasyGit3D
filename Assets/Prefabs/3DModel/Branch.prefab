@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8178161927296046885}
   - component: {fileID: 872521544899069475}
   - component: {fileID: 2275454661172592576}
-  - component: {fileID: 4063251617693075288}
+  - component: {fileID: 5446085307908224835}
   m_Layer: 0
   m_Name: Branch
   m_TagString: Untagged
@@ -187,8 +187,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &4063251617693075288
-CapsuleCollider:
+--- !u!65 &5446085307908224835
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -197,9 +197,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 2.187702
-  m_Height: 0.33732668
-  m_Direction: 1
+  serializedVersion: 2
+  m_Size: {x: 3.6781247, y: 0.33732668, z: 3.7086182}
   m_Center: {x: 0, y: 0.16865538, z: 0}
 --- !u!1 &8702326095876683594
 GameObject:

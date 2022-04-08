@@ -27,9 +27,13 @@ namespace Model
         private string contributor;
         private string date;
 
+        // 커밋 설명 팝업
+        private CommitPanel panel;
+
         private void Awake()
         {
             current = GetComponent<MeshRenderer>();
+            panel = GameObject.Find("CommitPanel").GetComponent<CommitPanel>();
         }
 
         // 커밋 종류에 따라 메터리얼 적용
@@ -56,6 +60,13 @@ namespace Model
                 default:
                     break;
             }
+        }
+
+        // 클릭 시 패널 표시
+        private void OnMouseDown()
+        {
+            panel.gameObject.SetActive(true);
+            panel.ShowPanel(Input.mousePosition, "Sameple Message", "Sample Author", "Sample Date");
         }
     }
 }
