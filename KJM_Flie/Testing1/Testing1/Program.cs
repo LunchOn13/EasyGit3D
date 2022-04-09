@@ -77,7 +77,6 @@ namespace Testing1
             //File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Branch.json", sonSpec.ToString());
             return Buser;
         }
-
         static void Main(string[] args)
         {
             List<String> BranchList = new List<String>();
@@ -111,6 +110,8 @@ namespace Testing1
         }
     }
 }
+
+//commit 개수 추출하는 명령어
 /*
          static void example() // input 없이 
         {
