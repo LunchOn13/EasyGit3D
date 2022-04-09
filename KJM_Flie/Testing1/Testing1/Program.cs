@@ -88,7 +88,6 @@ namespace Testing1
             string text = Console.ReadLine();   // 문자 열을 입력 //* KJM main
             BranchList = Repository(text); // git branch 전용
 
-
             for(int i = 0; i< BranchList.Count; i++)
             {
                 Console.WriteLine(BranchList[i] + "의 커밋 갯수 입력");
