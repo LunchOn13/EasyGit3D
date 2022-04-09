@@ -8,6 +8,7 @@ namespace Testing1
 {
     class Program
     {
+        static string checking;
         static string Log_seting() // 여러줄로 받기 위한 함수
         {
             string output = "";
@@ -20,7 +21,7 @@ namespace Testing1
             }
             return output;
         }
-        static void Commit() // "git log" 하면 나오는 commi의 정보
+        static JObject Commit() // "git log" 하면 나오는 commi의 정보
         {
             string text = Log_seting();
             string[] result = text.Split(' '); // input을 ' '로 나눈다
@@ -33,10 +34,10 @@ namespace Testing1
                 sonSpec.Add(new JProperty("Author", result[2]));
             }
             // json 파일의 내용들을 string문자로 만들기  
-            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Commit.json", sonSpec.ToString());
-            //return sonSpec;
+            //File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Commit.json", sonSpec.ToString());
+            return sonSpec;
         }
-        static void Repository(string input) // "git branch" 하면 나오는 것들
+        static List<String> Repository(string input) // "git branch" 하면 나오는 것들
         {
             JObject sonSpec = new JObject();
 
@@ -52,41 +53,61 @@ namespace Testing1
                     Buser.Add(result[i]);
             }
 
-            JObject member = new JObject();
-
-            for (int i = 0; i < Buser.Count; i++)
-            {
-                JObject mem = new JObject();
-                int x;
-                JObject str = new JObject();
-                Console.WriteLine(Buser[i]+"의 커밋수 입력");
-            
-                x = int.Parse(Console.ReadLine());
-                for(int j = 0; j < x; j++)
-                {
-                    //str.Add(Commit());
-                }
-                mem.Add(new JProperty(Buser[i]+"", str));
-                member.Add(mem);
-            }
-
-
-
-
+            //JObject member = new JObject();
+            //
+            //for (int i = 0; i < Buser.Count; i++)
+            //{
+            //    JObject mem = new JObject();
+            //    int x;
+            //    JObject str = new JObject();
+            //    Console.WriteLine(Buser[i]+"의 커밋수 입력");
+            //
+            //    x = int.Parse(Console.ReadLine());
+            //    for(int j = 0; j < x; j++)
+            //    {
+            //        //str.Add(Commit());
+            //    }
+            //    mem.Add(new JProperty(Buser[i]+"", str));
+            //    member.Add(mem);
+            //}
+            checking = result[StarIndex + 1];
             sonSpec.Add(new JProperty("Check", result[StarIndex + 1]));
-            sonSpec.Add(new JProperty("member", member));
+            sonSpec.Add(new JProperty("member", Buser));
 
-            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\XXX.json", sonSpec.ToString());
+            //File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Branch.json", sonSpec.ToString());
+            return Buser;
         }
 
         static void Main(string[] args)
         {
-            //Console.WriteLine("branch의 리스트를 한줄로 입력 하기");
-            //string text = Console.ReadLine();   // 문자 열을 입력 //* KJM main user1 user2
-            //Repository(text); // git branch 전용
+            List<String> BranchList = new List<String>();
+            JObject sonSpec = new JObject();
+            JObject Cfile = new JObject();
 
 
-           Commit(); // git log 전용
+            Console.WriteLine("branch의 리스트를 한줄로 입력 하기");
+            string text = Console.ReadLine();   // 문자 열을 입력 //* KJM main
+            BranchList = Repository(text); // git branch 전용
+
+
+            for(int i = 0; i< BranchList.Count; i++)
+            {
+                Console.WriteLine(BranchList[i] + "의 커밋 갯수 입력");
+                int x = int.Parse(Console.ReadLine());
+
+                JObject li = new JObject();
+                for (int j = 0; j < x; j++)
+                    li.Add(new JProperty(j +"", Commit()));
+
+                Cfile.Add(new JProperty(BranchList[i] + "", li));
+            }
+
+            sonSpec.Add(new JProperty("Cheke", checking));
+            sonSpec.Add(new JProperty("member", Cfile));
+
+            Console.WriteLine("파일명 입력");
+            string fliename = Console.ReadLine();
+            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\" +fliename +".json", sonSpec.ToString());
         }
     }
 }
