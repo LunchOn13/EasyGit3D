@@ -20,7 +20,78 @@ namespace Testing1
             }
             return output;
         }
-        static void example() // input 없이 
+        static void Commit() // "git log" 하면 나오는 commi의 정보
+        {
+            string text = Log_seting();
+            string[] result = text.Split(' '); // input을 ' '로 나눈다
+            JObject sonSpec = new JObject();
+
+            if(result.Length == 21)
+            {
+                sonSpec.Add(new JProperty("CommitMassage", result[18]));
+                sonSpec.Add(new JProperty("DateAndTime", result[7] + " " + result[8] + " " + result[9] + " " + result[11] + " " + result[10]));
+                sonSpec.Add(new JProperty("Author", result[2]));
+            }
+            // json 파일의 내용들을 string문자로 만들기  
+            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Commit.json", sonSpec.ToString());
+            //return sonSpec;
+        }
+        static void Repository(string input) // "git branch" 하면 나오는 것들
+        {
+            JObject sonSpec = new JObject();
+
+            char[] sep = { '\r', '\n', '\t', ' ' };
+            string[] result = input.Split(sep);
+
+            List<String> Buser = new List<String>();
+            int StarIndex = 0;
+            
+            for(int i = 0; i < result.Length; i++)
+            {
+                if (!result[i].Equals("*"))
+                    Buser.Add(result[i]);
+            }
+
+            JObject member = new JObject();
+
+            for (int i = 0; i < Buser.Count; i++)
+            {
+                JObject mem = new JObject();
+                int x;
+                JObject str = new JObject();
+                Console.WriteLine(Buser[i]+"의 커밋수 입력");
+            
+                x = int.Parse(Console.ReadLine());
+                for(int j = 0; j < x; j++)
+                {
+                    //str.Add(Commit());
+                }
+                mem.Add(new JProperty(Buser[i]+"", str));
+                member.Add(mem);
+            }
+
+
+
+
+            sonSpec.Add(new JProperty("Check", result[StarIndex + 1]));
+            sonSpec.Add(new JProperty("member", member));
+
+            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\XXX.json", sonSpec.ToString());
+        }
+
+        static void Main(string[] args)
+        {
+            //Console.WriteLine("branch의 리스트를 한줄로 입력 하기");
+            //string text = Console.ReadLine();   // 문자 열을 입력 //* KJM main user1 user2
+            //Repository(text); // git branch 전용
+
+
+           Commit(); // git log 전용
+        }
+    }
+}
+/*
+         static void example() // input 없이 
         {
             string text = "AuthorString\nDataString\tTitleString ExString";
             char[] sep = { '\n', '\t', ' '};  // 이것들로 토큰을 나눈다
@@ -40,63 +111,4 @@ namespace Testing1
             );
             File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\test1_4.json", sonSpec.ToString());
         }
-        static void Log_Information() // "git log" 하면 나오는 commi의 정보
-        {
-            string text = Log_seting();
-            string[] result = text.Split(' '); // input을 ' '로 나눈다
-            JObject sonSpec = new JObject();
-
-            if(result.Length == 21)
-            {
-                sonSpec.Add(new JProperty("CommitMassage", result[18]));
-                sonSpec.Add(new JProperty("DateAndTime", result[7] + " " + result[8] + " " + result[9] + " " + result[11] + " " + result[10]));
-                sonSpec.Add(new JProperty("Author", result[2]));
-            }
-            else
-            {
-                Console.WriteLine("### 그 외 ###");
-            }
-            // json 파일의 내용들을 string문자로 만들기  
-            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Git_Log.json", sonSpec.ToString());
-            // json의 내용이 담긴 내용을 실제 json파일로 생성
-
-            for (int i = 0; i < result.Length; i++)
-            {
-                Console.WriteLine(result[i] + " : " +i);
-            }
-
-        }
-        static void Branch(string input) // "git branch" 하면 나오는 것들
-        {
-            JObject sonSpec = new JObject();
-
-            // step 1 먼저 토큰 나누기
-            char[] sep = { '\r', '\n', '\t', ' ' };
-            string[] result = input.Split(sep);
-            List<String> wirtestring = new List<String>();
-
-            // step 2 branch의 경우 check가 어디로 되어있는지 확인 And 
-            int StarIndex = 0;
-            for(int i = 0; i < result.Length; i++)
-            {
-                if (!result[i].Equals("*"))
-                    wirtestring.Add(result[i]);
-            }
-
-            sonSpec.Add(new JProperty("Check", result[StarIndex + 1]));
-            sonSpec.Add(new JProperty("member", wirtestring));
-            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Git_Branch.json", sonSpec.ToString());
-        }
-
-        static void Main(string[] args)
-        {
-
-            Console.WriteLine("branch의 리스트를 한줄로 받기");
-            string text = Console.ReadLine();   // 문자 열을 입력
-            Branch(text); // git branch 전용
-
-
-            //Log_Information(); // git log 전용
-        }
-    }
-}
+ */
