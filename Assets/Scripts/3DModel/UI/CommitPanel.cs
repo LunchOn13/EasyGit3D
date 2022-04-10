@@ -31,7 +31,12 @@ public class CommitPanel : MonoBehaviour
         size = rect.sizeDelta;
         point = transform.position;
 
-        // 초기화
+        HidePanel();
+    }
+
+    // 패널 숨김
+    public void HidePanel()
+    {
         rect.sizeDelta = Vector2.zero;
     }
 

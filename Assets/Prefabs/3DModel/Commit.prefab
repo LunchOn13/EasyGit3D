@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 964ea7386bb741c47893fc6f78a3e2c1, type: 2}
+  - {fileID: 2100000, guid: 208826ed26dd74a42a292fe8c85b30e3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   modify: {fileID: 2100000, guid: 4aa5444b14748ab44b3cab962974e14d, type: 2}
   delete: {fileID: 2100000, guid: 586475f24053fde44b4a96cef0510af5, type: 2}
   finish: {fileID: 2100000, guid: f01197754cb8d884fa9c4ec391d608e2, type: 2}
-  panel: {fileID: 0}
+  highlight: {fileID: 2100000, guid: 208826ed26dd74a42a292fe8c85b30e3, type: 2}
 --- !u!136 &7037669544146882636
 CapsuleCollider:
   m_ObjectHideFlags: 0

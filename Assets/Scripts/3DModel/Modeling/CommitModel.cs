@@ -21,19 +21,23 @@ namespace Model
         [SerializeField] Material delete;
         [SerializeField] Material finish;
 
+        [SerializeField] Material highlight;
+
         private MeshRenderer current;
 
         private string title;
         private string contributor;
         private string date;
 
-        // 커밋 설명 팝업
+        // 커밋 관련 오브젝트
         private CommitPanel panel;
+        private CommitMessage message;
 
         private void Awake()
         {
             current = GetComponent<MeshRenderer>();
             panel = GameObject.Find("CommitPanel").GetComponent<CommitPanel>();
+            message = GameObject.Find("CommitMessage").GetComponent<CommitMessage>();
         }
 
         // 커밋 종류에 따라 메터리얼 적용
@@ -62,10 +66,24 @@ namespace Model
             }
         }
 
+        // 마우스 오버 시 커밋메시지 표시
+        private void OnMouseEnter()
+        {
+            current.material = highlight;
+            message.SetMessage("Sample Message", Input.mousePosition);
+        }
+
+        // 마우스 벗어나면 텍스트 숨김
+        private void OnMouseExit()
+        {
+            current.material = current.material = finish;
+            message.SetMessage("", transform.position);
+        }
+
         // 클릭 시 패널 표시
         private void OnMouseDown()
         {
-            panel.gameObject.SetActive(true);
+            message.SetMessage("", transform.position);
             panel.ShowPanel(Input.mousePosition, "Sameple Message", "Sample Author", "Sample Date");
         }
     }
