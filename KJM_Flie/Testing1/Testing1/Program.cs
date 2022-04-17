@@ -109,7 +109,6 @@ namespace Testing1
         }
     }
 }
-
 //commit 개수 추출하는 명령어
 /*
          static void example() // input 없이 
