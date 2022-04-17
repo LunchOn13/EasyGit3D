@@ -21,7 +21,7 @@ namespace Testing1
             }
             return output;
         }
-        static JObject Commit() // "git log" 하면 나오는 commi의 정보
+        static JObject Commit() // "git log" 명령의 output
         {
             string text = Log_seting();
             string[] result = text.Split(' '); // input을 ' '로 나눈다
@@ -37,7 +37,7 @@ namespace Testing1
             //File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Commit.json", sonSpec.ToString());
             return sonSpec;
         }
-        static List<String> Repository(string input) // "git branch" 하면 나오는 것들
+        static List<String> Repository(string input) // "git branch" 명령의 output
         {
             JObject sonSpec = new JObject();
 
