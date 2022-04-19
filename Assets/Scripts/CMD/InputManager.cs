@@ -74,7 +74,7 @@ public class InputManager : MonoBehaviour
         //}
 
         CMDworker.input(input.text);
-        UnityEngine.Debug.Log(input.text);
+        UnityEngine.Debug.Log(CMDworker.engine.inputCommand);
 
         // 입력 텍스트 출력에 추가
         //output.text += '\n';

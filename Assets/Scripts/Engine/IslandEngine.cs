@@ -1,26 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.Diagnostics;
 using System.IO;
 using System;
 using System.Text;
-using System.Threading;
-using System.ComponentModel;
 
 
 public class IslandEngine
 {
-    public static StringBuilder outputString = null;
+    public Output output = new Output();
+    public Error error = new Error();
+    public String inputCommand = "";
 
-    private Process bash = new Process();
-    private ProcessStartInfo bashInfo = new ProcessStartInfo();
+    private readonly Process bash = new Process();
+    private readonly ProcessStartInfo bashInfo = new ProcessStartInfo();
 
     private StreamWriter writer;
 
-    private Boolean isOutput = false;
-
-
+    /// <summary>
+    /// 환경변수에서 git 경로를 가져와서 실행시킨다.
+    /// </summary>
+    /// <returns>
+    /// string인 컴퓨터 환경변수상의 git 경로를 가져온다.
+    /// </returns>
     public string FindGitPath()
     {
         string a = Environment.GetEnvironmentVariable("path");
@@ -30,7 +30,7 @@ public class IslandEngine
         {
             if (e.Contains("Git\\cmd") || e.Contains("git\\cmd"))
             {
-                // 여러개가 나오는 경우는 아직 모르는 레후;;
+                // 여러개가 나오는 경우는 아직 모른다
                 string[] contents = e.Split('\\');
                 foreach (string k in contents)
                 {
@@ -71,34 +71,38 @@ public class IslandEngine
     /// </summary>
     private void SetInfo()
     {
-        //bashInfo.FileName = "C:\\Program Files (x86)\\Git\\bin\\bash.exe";
-        UnityEngine.Debug.Log(FindGitPath());
         bashInfo.FileName = FindGitPath();
         bashInfo.UseShellExecute = false;
         bashInfo.CreateNoWindow = true;
 
         // 테스트용 경로임 삭제할 것
-        bashInfo.WorkingDirectory = "C:\\Users\\crusi\\Documents\\GitHub\\Swimming_on_git";
+        bashInfo.WorkingDirectory = "F:\\Swimming_on_git";
 
         bashInfo.RedirectStandardOutput = true;
-        outputString = new StringBuilder();
-
-
         bashInfo.RedirectStandardInput = true;
+        bashInfo.RedirectStandardError = true;
 
         bash.StartInfo = bashInfo;
-        bash.OutputDataReceived += OutputHandler;
 
+        bash.OutputDataReceived += OutputHandler;
+        bash.ErrorDataReceived += ErrorHandler;
+        //bash.ErrorDataReceived += new DataReceivedEventHandler(ErrorHandler);
     }
 
     /// <summary>
-    /// 깃 배쉬를 실행시키고, output을 읽기 시작
+    /// 깃 배쉬를 실행시키고, output과 error를 읽기 시작
     /// </summary>
     public void StartEngine()
     {
         SetInfo();
         bash.Start();
+        
+        // 이거 비동기로 읽는 거라는데 잘못 쓰고 있었을지도 모르겠따.
         bash.BeginOutputReadLine();
+
+        // 에러 읽기 ( Progress 읽기 )
+        bash.BeginErrorReadLine();
+        UnityEngine.Debug.Log("start error read line");
     }
 
     /// <summary>
@@ -107,29 +111,12 @@ public class IslandEngine
     /// <param name="input"> 깃 배쉬에 입력할 명령어를 그대로 넣을 것</param>
     public void WriteInput(string input)
     {
-        outputString.Clear();
+        output.Clear();
+        error.Clear();
         writer = bash.StandardInput;
+        inputCommand = input;
         writer.WriteLine(input);
         writer.Flush();
-    }
-
-    /// <summary>
-    /// 현재 쓸 수 없음
-    /// output이 string으로 저장되는 속도보다 이걸 호출하는게 빠르면 아무것도 없는게 전달됨
-    /// 
-    /// TODO :: OutputHandler에서 outputString에 원하는 정보가 들어갔는지 확인하고 호출해야함
-    /// </summary>
-    /// <returns></returns>
-    public StringBuilder ReadOutput()
-    {
-        // 이거 호출이 너무 빨라서 아무것도 없는게 감
-        if (CheckOutput())
-        {
-            isOutput = false;
-            return outputString;
-        }
-        else
-            return null;
     }
 
     /// <summary>
@@ -140,16 +127,21 @@ public class IslandEngine
         writer.Close();
         bash.Close();
     }
+    /**
+     * 
+     * 
+     *  git push 했을 때 나오는 값들임 파싱할때 필요할거같아서 기록함
+ Enumerating objects: 27, done.
+Counting objects: 100% (27/27), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (17/17), done.
+Writing objects: 100% (17/17), 4.00 KiB | 4.00 MiB/s, done.
+Total 17 (delta 10), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (10/10), completed with 9 local objects.
+To github.com:LunchOn13/Swimming_on_git.git
+   d874e529..211ce95a  LJW -> LJW
 
-    /// <summary>
-    /// output에 값이 들어있는지 확인한다.
-    /// </summary>
-    /// <returns>output에 값이 있으면 true, 없다면 false</returns>
-    public Boolean CheckOutput()
-    {
-        return isOutput;
-    }
-
+     */
 
     /// <summary>
     /// 깃 배쉬의 output을 가져와서 무엇을 할 것인가~
@@ -159,14 +151,30 @@ public class IslandEngine
     private void OutputHandler(object sendingProcess,
             DataReceivedEventArgs outLine)
     {
-
         // Collect the sort command output.
         if (!String.IsNullOrEmpty(outLine.Data))
         {
-            // Add the text to the collected output.
-            //UnityEngine.Debug.Log(outLine.Data);
-            outputString.AppendLine(outLine.Data);
-            isOutput = true;
+            output.AppendLine(outLine.Data);
+        }
+    }
+
+    /// <summary>
+    /// --progress 옵션을 넣어줘야만 한다.
+    /// 에러 핸들러인데
+    /// git 에서 진행상황 보여줄때 errorstream에다가 적어서
+    /// 표시해준다 그래서 이걸로 봐야함
+    /// git clone --progress 깃주소
+    /// 이런 형식으로 적어야함
+    /// 
+    ///  /// https://docs.microsoft.com/ko-kr/dotnet/api/system.diagnostics.process.errordatareceived?view=net-6.0
+    /// 참조
+    /// </summary>
+    /// <param name=""></param>
+    private void ErrorHandler(object sendingProcess, DataReceivedEventArgs errLine)
+    {
+        if (!String.IsNullOrEmpty(errLine.Data))
+        {
+            error.AppendLine(errLine.Data);
         }
     }
 
