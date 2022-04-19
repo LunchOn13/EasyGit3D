@@ -82,11 +82,11 @@ Shader "Robo shaders/Structures_ LWRP"
         	#define _NORMALMAP 1
 
 
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
         	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
         	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
 			sampler2D _Albedo;
 			float4 _Albedo_ST;
