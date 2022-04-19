@@ -14,3 +14,9 @@ public class Branch
     public string title;
     public string[] author;
 }
+
+[System.Serializable]
+public class Author
+{
+    public string[] name;
+}
