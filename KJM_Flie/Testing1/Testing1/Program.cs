@@ -105,10 +105,12 @@ namespace Testing1
 
             Console.WriteLine("파일명 입력");
             string fliename = Console.ReadLine();
-            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\" +fliename +".json", sonSpec.ToString());
+            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\"
++fliename +".json", sonSpec.ToString());
         }
     }
 }
+
 //commit 개수 추출하는 명령어
 /*
          static void example() // input 없이 
