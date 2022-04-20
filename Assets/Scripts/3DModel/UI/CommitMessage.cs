@@ -24,9 +24,6 @@ public class CommitMessage : MonoBehaviour
         message.text = text;
         message.rectTransform.sizeDelta = new Vector2(message.preferredWidth, message.preferredHeight);
         
-        Debug.Log("width: " + message.preferredWidth);
-        Debug.Log("height: " + message.preferredHeight);
-
         float width = message.rectTransform.sizeDelta.x;
 
         // 텍스트 위치 설정
