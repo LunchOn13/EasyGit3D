@@ -70,7 +70,7 @@ namespace Model
         private void OnMouseEnter()
         {
             current.material = highlight;
-            message.SetMessage("Sample Message", Input.mousePosition);
+            message.SetMessage("Sample", Input.mousePosition);
         }
 
         // 마우스 벗어나면 텍스트 숨김
