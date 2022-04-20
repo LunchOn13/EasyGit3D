@@ -22,8 +22,8 @@ public class CommitMessage : MonoBehaviour
     {
         // 텍스트 크기 설정
         message.text = text;
-        message.rectTransform.sizeDelta.Set(message.preferredWidth, message.preferredHeight);
-
+        message.rectTransform.sizeDelta = new Vector2(message.preferredWidth, message.preferredHeight);
+        
         float width = message.rectTransform.sizeDelta.x;
 
         // 텍스트 위치 설정
