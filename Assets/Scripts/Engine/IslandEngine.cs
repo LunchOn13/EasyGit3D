@@ -8,7 +8,7 @@ public class IslandEngine
 {
     public Output output = new Output();
     public Error error = new Error();
-    public String inputCommand = "";
+    public string inputCommand = "";
 
     private readonly Process bash = new Process();
     private readonly ProcessStartInfo bashInfo = new ProcessStartInfo();
@@ -103,6 +103,8 @@ public class IslandEngine
         // 에러 읽기 ( Progress 읽기 )
         bash.BeginErrorReadLine();
         UnityEngine.Debug.Log("start error read line");
+
+        WriteInput("pwd");
     }
 
     /// <summary>
@@ -117,6 +119,11 @@ public class IslandEngine
         inputCommand = input;
         writer.WriteLine(input);
         writer.Flush();
+        if(input.Length >=3 && input[0] == 'c' && input[1] == 'd' && input[2] == ' ')
+        {
+            writer.WriteLine("pwd");
+            writer.Flush();
+        }
     }
 
     /// <summary>
@@ -140,7 +147,6 @@ Total 17 (delta 10), reused 0 (delta 0), pack-reused 0
 remote: Resolving deltas: 100% (10/10), completed with 9 local objects.
 To github.com:LunchOn13/Swimming_on_git.git
    d874e529..211ce95a  LJW -> LJW
-
      */
 
     /// <summary>

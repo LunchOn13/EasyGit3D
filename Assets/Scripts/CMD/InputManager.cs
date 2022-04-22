@@ -39,7 +39,6 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
             ConductInput();
-
         CMDworker.output();
 
         if (isUpdateScroll)
@@ -56,6 +55,7 @@ public class InputManager : MonoBehaviour
         newText.GetComponent<Text>().text = s;
         newText.transform.parent = outputContent.transform;
 
+        
         // 문장 리스트에 추가
         outputList.Add(newText);
 
@@ -66,20 +66,8 @@ public class InputManager : MonoBehaviour
     // 입력 텍스트 처리
     public void ConductInput()
     {
-        //// 아무것도 없을때 처리
-        //if (output.text == "")
-        //{
-        //    output.text = input.text;
-        //    return;
-        //}
-
         CMDworker.input(input.text);
-        UnityEngine.Debug.Log(CMDworker.engine.inputCommand);
 
-        // 입력 텍스트 출력에 추가
-        //output.text += '\n';
-        //output.text += input.text;
-        //output.text += '\n';
         // 입력 텍스트 초기화
         input.text = "";
 
