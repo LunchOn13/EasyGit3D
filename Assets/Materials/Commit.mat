@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Finished
+  m_Name: Commit
   m_Shader: {fileID: 4800000, guid: 6b0ec9d77cc78584cb6fbe792f61c888, type: 3}
   m_ShaderKeywords: _CONTINUOUSFLICKERING_ON _DESATURATIONAFFECTSEMISSION_ON _FLICKERING_ON
     _FRESNEL_ON

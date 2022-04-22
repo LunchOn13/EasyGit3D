@@ -22,17 +22,36 @@ namespace Model
         // 라인 길이
         private float distance;
 
+        // 브랜치들의 중심이 되는 메인
+        private BranchData main;
+
+        private List<BranchData> develop;
+
         // [임시] 더미 데이터
-        public BranchData masterDummy;
-        public BranchData[] developDummy;
+        public RepositoryData repositoryDummy;
 
         private void Start()
         {
-            angle = 180 / (developDummy.Length + 1);
+            develop = new List<BranchData>();
+
+            // [임시] 불러오기 시험
+            repositoryDummy = JsonUtility.FromJson<RepositoryData>((Resources.Load("TestData") as TextAsset).ToString());
+
+            // 브랜치 분류
+            foreach (BranchData branch in repositoryDummy.branches)
+            {
+                // 메인 브랜치
+                if (branch.title == "main")
+                    main = branch;
+                // 기타 브랜치
+                else
+                    develop.Add(branch);
+            }
+
+            angle = 180 / (develop.Count + 1);
             distance = line.GetComponent<Line>().line.localScale.y * 2;
 
-            // [임시] 더미 생성
-            MadeBranch(masterDummy).transform.position = master.position;
+            MadeBranch(main).transform.position = master.position;
             LocateAllBranch();
         }
 
@@ -42,9 +61,10 @@ namespace Model
             GameObject newObject = Instantiate(branch);
             BranchModel newBranch = newObject.GetComponent<BranchModel>();
 
+            // 브랜치 정보 적용
             newBranch.ApplyTitle(data.title);
             for (int i = 0; i < data.commits.Length; i++)
-                newBranch.MakeCommit((CommitCategory)data.commits[i].type);
+                newBranch.MakeCommit(data.commits[i]);
 
             return newObject;
         }
@@ -52,7 +72,7 @@ namespace Model
         // 브랜치 배치 설정
         public void LocateAllBranch()
         {
-            for(int i = 1; i <= developDummy.Length; i++)
+            for(int i = 1; i <= develop.Count; i++)
             {
                 // 라인 생성
                 GameObject newObject = Instantiate(line);
@@ -62,7 +82,7 @@ namespace Model
                 newObject.transform.Rotate(0f, -angle * i, 0f);
 
                 // 브랜치 생성
-                GameObject newBranch = MadeBranch(developDummy[i - 1]);
+                GameObject newBranch = MadeBranch(develop[i - 1]);
                 
                 float positionX = master.position.x + distance * Mathf.Cos(angle * i * Mathf.Deg2Rad);
                 float positionY = master.position.y;

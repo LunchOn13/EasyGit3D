@@ -1,0 +1,40 @@
+{
+  "checkout": "KJM",
+  "branches": [
+    {
+      "title": "KJM",
+      "commits": [
+        {
+          "message": "branch_mathod_create",
+          "author": "jeong-mo",
+          "date": "Wed Apr 6 2022 18:33:23"
+        },
+        {
+          "message": "33333",
+          "author": "jeong-mo",
+          "date": "Wed Apr 6 2022 17:51:44"
+        }
+      ]
+    },
+    {
+      "title": "main",
+      "commits": [
+        {
+          "message": "branch_mathod_create",
+          "author": "jeong-mo",
+          "date": "Wed Apr 6 2022 18:33:23"
+        },
+        {
+          "message": "33333",
+          "author": "jeong-mo",
+          "date": "Wed Apr 6 2022 17:51:44"
+        },
+        {
+          "message": "branch_mathod_create",
+          "author": "jeong-mo",
+          "date": "Wed Apr 6 2022 18:33:23"
+        }
+      ]
+    }
+  ]
+}

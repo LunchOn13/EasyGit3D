@@ -135,42 +135,9 @@ MonoBehaviour:
   addTransform: {fileID: 8612080076604347802}
   modifyTransform: {fileID: 9180129567285020452}
   deleteTransform: {fileID: 1574189142172136130}
-  finishTransform: {fileID: 258543568663208167}
+  start: {fileID: 258543568663208167}
   distance: 0.5
   title: {fileID: 2947148301152956989}
-  dummy:
-  - title: 
-    contributor: 
-    date: 
-    type: 0
-  - title: 
-    contributor: 
-    date: 
-    type: 1
-  - title: 
-    contributor: 
-    date: 
-    type: 2
-  - title: 
-    contributor: 
-    date: 
-    type: 1
-  - title: 
-    contributor: 
-    date: 
-    type: 2
-  - title: 
-    contributor: 
-    date: 
-    type: 3
-  - title: 
-    contributor: 
-    date: 
-    type: 3
-  - title: 
-    contributor: 
-    date: 
-    type: 3
 --- !u!54 &2275454661172592576
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -856,7 +823,7 @@ PrefabInstance:
     - target: {fileID: 8881375455372971335, guid: a619a82d39dd9a7418cb35840f320d5a,
         type: 3}
       propertyPath: m_Name
-      value: Finish
+      value: Commit
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8881375455372971334, guid: a619a82d39dd9a7418cb35840f320d5a, type: 3}
