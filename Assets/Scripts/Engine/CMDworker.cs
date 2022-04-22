@@ -31,7 +31,7 @@ public class CMDworker : MonoBehaviour
 
     public static void output()
     {
-        string s = "";
+
         if(engine.output.IsReadable())
         {
             UnityEngine.Debug.Log("lineofoutput " + engine.output.LineofOutput());
