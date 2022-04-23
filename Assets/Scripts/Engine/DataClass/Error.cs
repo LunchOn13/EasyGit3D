@@ -57,6 +57,11 @@ public class Error
         return this.RealError;
     }
 
+    public void ErrorCheck()
+    {
+        this.isError = false;
+    }
+
     /// <summary>
     /// error를 입력하고 저장하며, 문자열 개수를 증가시키고, 읽을 수 있게 flag 설정한다.
     /// </summary>
@@ -66,6 +71,8 @@ public class Error
         // TODO:: 실제 에러인지 체크하는 로직이 필요하다.
         // TODO:: Task 확인하는 것도 필요하다.
 
+
+        this.isError = true;
         if (s.Contains("fatal"))
         {
             // fatal error
@@ -99,12 +106,10 @@ public class Error
             now = now.Split('/')[0];
             now = now.Remove(0, 1);
             this.nowTask = Convert.ToInt32(now);
-
         }
 
         this.error.AppendLine(s);
         this.lineCount++;
-        this.isError = true;
 
         /* 
          * ErrorLines() 로 가져오고보면
@@ -126,13 +131,15 @@ public class Error
     /// <returns></returns>
     public string ErrorLines()
     {
+        UnityEngine.Debug.Log("isError is " + this.isError);
         if (this.isError)
         {
-            this.isError = false;
-            return this.error.ToString();
+            string s = this.error.ToString();
+            error.Clear();
+            return s;
         }
         else
-            return null;
+            return "null";
     }
 
     /// <summary>
