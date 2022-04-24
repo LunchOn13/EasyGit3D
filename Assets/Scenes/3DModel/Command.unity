@@ -361,7 +361,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1564659128}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.97804964
+  m_Size: 0.9828634
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -652,7 +652,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 5.317384}
+  m_AnchoredPosition: {x: 0, y: 0.0001170688}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &558936691
@@ -1238,9 +1238,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 550639246643dd44ab15ac009b75fbf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 0}
-  output: {fileID: 0}
-  scroll: {fileID: 0}
+  input: {fileID: 1279133803}
+  output: {fileID: 528073434}
+  scroll: {fileID: 466642624}
 --- !u!4 &1323195494
 Transform:
   m_ObjectHideFlags: 0

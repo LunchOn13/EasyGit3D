@@ -71,12 +71,13 @@ public class IslandEngine
     /// </summary>
     private void SetInfo()
     {
-        bashInfo.FileName = FindGitPath();
+        //bashInfo.FileName = FindGitPath();
+        bashInfo.FileName = "C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe";
         bashInfo.UseShellExecute = false;
         bashInfo.CreateNoWindow = true;
 
         // 테스트용 경로임 삭제할 것
-        bashInfo.WorkingDirectory = "F:\\Swimming_on_git";
+        bashInfo.WorkingDirectory = "D:\\UnityProject\\Capstone\\Swimming_on_git";
 
         bashInfo.RedirectStandardOutput = true;
         bashInfo.RedirectStandardInput = true;
