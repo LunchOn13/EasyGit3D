@@ -65,6 +65,9 @@ namespace Model
             newBranch.ApplyTitle(data.title);
             for (int i = 0; i < data.commits.Length; i++)
                 newBranch.MakeCommit(data.commits[i]);
+            
+            // 드래그 적용
+            newObject.GetComponent<DragBranch>().Initialize();
 
             return newObject;
         }
@@ -83,7 +86,7 @@ namespace Model
 
                 // 브랜치 생성
                 GameObject newBranch = MadeBranch(develop[i - 1]);
-                
+
                 float positionX = master.position.x + distance * Mathf.Cos(angle * i * Mathf.Deg2Rad);
                 float positionY = master.position.y;
                 float positionZ = master.position.z + distance * Mathf.Sin(angle * i * Mathf.Deg2Rad);

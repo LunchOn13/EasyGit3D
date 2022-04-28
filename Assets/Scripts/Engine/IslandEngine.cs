@@ -71,8 +71,7 @@ public class IslandEngine
     /// </summary>
     private void SetInfo()
     {
-        //bashInfo.FileName = FindGitPath();
-        bashInfo.FileName = "C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe";
+        bashInfo.FileName = FindGitPath();
         bashInfo.UseShellExecute = false;
         bashInfo.CreateNoWindow = true;
 
