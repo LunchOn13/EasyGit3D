@@ -11,5 +11,16 @@ C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netc
 C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.pdb
 C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.genruntimeconfig.cache
 C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
-C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.csproj.CoreCompileInputs.cache
 C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.csproj.CopyComplete
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\System.Text.Encodings.Web.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\bin\Debug\netcoreapp3.1\System.Text.Json.dll
+C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\Testing1\Testing1\obj\Debug\netcoreapp3.1\Testing1.csproj.CoreCompileInputs.cache

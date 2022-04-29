@@ -1,0 +1,42 @@
+[
+  {
+    "Checkout": "KJM",
+    "Branches": [
+      {
+        "Title": "KJM",
+        "Commites": [
+          {
+            "Message": "중돌수정",
+            "author": "jeong-mo1",
+            "date": "Tue Apr 19 2022 16:13:11"
+          },
+          {
+            "Message": "newfile수정-무시-",
+            "author": "jeong-mo22",
+            "date": "Tue Apr 19 2022 16:10:18"
+          },
+          {
+            "Message": "TestofJson",
+            "author": "jeong-mo333",
+            "date": "Sun Apr 17 2022 12:28:09"
+          }
+        ]
+      },
+      {
+        "Title": "main",
+        "Commites": [
+          {
+            "Message": "main111",
+            "author": "main1",
+            "date": "Tue Apr 19 2022 16:13:11"
+          },
+          {
+            "Message": "main22",
+            "author": "main22",
+            "date": "Tue Apr 19 2022 16:10:18"
+          }
+        ]
+      }
+    ]
+  }
+]
