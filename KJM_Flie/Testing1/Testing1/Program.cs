@@ -13,17 +13,17 @@ namespace Testing1
     public class JsonFile
     {
         public string checkout { get; set; }
-        public List<Branche> Branches { get; set; }
+        public List<Branche> branches { get; set; }
     
     }
     public class Branche
     {
-        public string Title { get; set; }
-        public List<Commit_info> Commites { get; set; }
+        public string title { get; set; }
+        public List<Commit_info> commits { get; set; }
     }
     public class Commit_info
     {
-        public string Message { get; set; }
+        public string message { get; set; }
         public string author { get; set; }
         public string date { get; set; }
     }
@@ -60,7 +60,7 @@ namespace Testing1
 
                 ListCommit.Add(new Commit_info()
                 {
-                    Message = commit_massage
+                    message = commit_massage
                     , author = result[3]
                     , date = result[8] + " " + result[9] + " " + result[10] + " " + result[12] + " " + result[11]
                 });
@@ -93,7 +93,7 @@ namespace Testing1
             List<String> BranchList = new List<String>();
             List<Branche> Branche = new List<Branche>();
             List<JsonFile> JsonFile = new List<JsonFile>();
-           //JObject sonSpec = new JObject();
+           JObject sonSpec = new JObject();
             
 
             Console.WriteLine("branch의 리스트를 한줄로 입력 하기");
@@ -109,35 +109,26 @@ namespace Testing1
 
                 Branche.Add(new Branche()
                 {
-                    Title = BranchList[i]
-                    ,Commites = Commit(commitCount)
+                    title = BranchList[i]
+                    ,
+                    commits = Commit(commitCount)
                 });
             }
-            JsonFile.Add(new JsonFile()
-            {
-                Checkout = checking
-                ,Branches = Branche
-            });
-
-            string strJsonmain = JsonConvert.SerializeObject(JsonFile.ToArray(), Formatting.Indented);
-
-
-
-            //sonSpec.Add(new JProperty("checkout", checking));
-            //sonSpec.Add(new JProperty("branches", strJsonmain));
-
             Console.WriteLine("파일명 입력");
             string fliename = Console.ReadLine();
 
-            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\" + fliename + ".json", strJsonmain);
+            //JsonFile.Add(new JsonFile()
+            //{
+            //    checkout = checking
+            //    ,
+            //    branches = Branche
+            //});
+            //string strJsonmain = JsonConvert.SerializeObject(JsonFile.ToArray(), Formatting.Indented);
+            //File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\" + fliename + ".json", strJsonmain);
+
+            JsonFile js = new JsonFile { checkout = checking, branches = Branche };
+            var j3 = JObject.FromObject(js);
+            File.WriteAllText(@"C:\Users\82103\Desktop\Swimming_on_git\KJM_Flie\" + fliename +".json", j3.ToString());
         }
     }
 }
-
-//              commit 을 ' '을 나눴을때 문자열이 몇개인지 화긴용 
-//            for(int i = 0; i<result.Length; i++)
-//            {
-//                Console.WriteLine(i + " : " + result[i]);
-//            }
-
-//commit 개수 추출하는 명령어
