@@ -37,6 +37,7 @@ public class CommitPanel : MonoBehaviour
     // 패널 숨김
     public void HidePanel()
     {
+        StopAllCoroutines();
         rect.sizeDelta = Vector2.zero;
     }
 

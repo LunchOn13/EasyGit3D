@@ -21,6 +21,9 @@ namespace Model
 
         [SerializeField] Transform start;
 
+        // 카메라 트랜스폼
+        public Transform cameraTransform;
+
         // 커밋 종류별 개수
         private int addCount;
         private int modifyCount;
@@ -93,6 +96,15 @@ namespace Model
         public void ApplyTitle(string _title)
         {
             title.text = _title;
+        }
+
+        private void OnMouseDown()
+        {
+            CameraMove.SetTarget(cameraTransform);
+
+            // git checkout 실행
+            InputManager.OutputControl("git checkout " + title.text + "\n");
+            CMDworker.input("git checkout " + title.text);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,13 @@ namespace Model
 
         // 마스터 브랜치 트랜스폼
         [SerializeField] Transform master;
+
+        // 카메라 이동
+        private CameraMove move;
+
+        // 현재 브랜치와 매핑되는 카메라 위치
+        private ConcurrentDictionary<string, Transform> cameras;
+        private string checkout;
 
         // 브랜치 각도 간격
         private float angle;
@@ -33,9 +41,13 @@ namespace Model
         private void Start()
         {
             develop = new List<BranchData>();
+            cameras = new ConcurrentDictionary<string, Transform>();
 
             // [임시] 불러오기 시험
             repositoryDummy = JsonUtility.FromJson<RepositoryData>((Resources.Load("TestData") as TextAsset).ToString());
+
+            // 현재 체크아웃 브랜치
+            checkout = repositoryDummy.checkout;
 
             // 브랜치 분류
             foreach (BranchData branch in repositoryDummy.branches)
@@ -53,6 +65,10 @@ namespace Model
 
             MadeBranch(main).transform.position = master.position;
             LocateAllBranch();
+
+            // 카메라 현재 체크아웃 브랜치에 고정
+            Camera.main.transform.position = cameras[checkout].position;
+            Camera.main.transform.rotation = cameras[checkout].rotation;
         }
 
         // 브랜치 개별 모델링
@@ -69,6 +85,9 @@ namespace Model
             // 드래그 적용
             newObject.GetComponent<DragBranch>().Initialize();
 
+            // 카메라 위치 적용
+            cameras[data.title] = newBranch.cameraTransform;
+
             return newObject;
         }
         
@@ -79,7 +98,6 @@ namespace Model
             {
                 // 라인 생성
                 GameObject newObject = Instantiate(line);
-                Line newLine = newObject.GetComponent<Line>();
 
                 newObject.transform.position = master.position;
                 newObject.transform.Rotate(0f, -angle * i, 0f);

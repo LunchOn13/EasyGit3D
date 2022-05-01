@@ -11,6 +11,9 @@ public class DragBranch : MonoBehaviour
     private float startY;
     private Vector3 point;
 
+    private bool mouseIn = false;
+    private bool mouseDrag = false;
+
     // 드래그용 게임 오브젝트 설정
     public void Initialize()
     {
@@ -42,22 +45,55 @@ public class DragBranch : MonoBehaviour
         return new Vector3(resultX, resultY, resultZ);
     }
 
-    private void OnMouseDown()
+    private void Update()
     {
-        // 보이게 하기
-        dragObject.SetActive(true);
+        // 마우스 우클릭
+        if (Input.GetMouseButtonDown(1) && mouseIn)
+        {
+            dragObject.SetActive(true);
+            mouseDrag = true;
+        }
+        if(Input.GetMouseButton(1) && mouseDrag)
+        {
+            // 마우스 위치 계산
+            point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
+            dragObject.transform.position = RatioApplied(point);
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            dragObject.SetActive(false);
+            mouseDrag = false;
+        }
     }
 
-    private void OnMouseDrag()
+    // 마우스 안에 있음
+    private void OnMouseEnter()
     {
-        // 마우스 위치 계산
-        point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
-        dragObject.transform.position = RatioApplied(point);
+        mouseIn = true;
     }
 
-    private void OnMouseUp()
+    // 마우스가 밖에 있음
+    private void OnMouseExit()
     {
-        // 숨기기
-        dragObject.SetActive(false);
+        mouseIn = false;
     }
+
+    //    private void OnMouseDown()
+    //    {
+    //        // 보이게 하기
+    //        dragObject.SetActive(true);
+    //    }
+
+    //    private void OnMouseDrag()
+    //    {
+    //        // 마우스 위치 계산
+    //        point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
+    //        dragObject.transform.position = RatioApplied(point);
+    //    }
+
+    //    private void OnMouseUp()
+    //    {
+    //        // 숨기기
+    //        dragObject.SetActive(false);
+    //    }
 }
