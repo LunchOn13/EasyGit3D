@@ -22,7 +22,10 @@ namespace Model
 
         // 현재 브랜치와 매핑되는 카메라 위치
         private ConcurrentDictionary<string, Transform> cameras;
-        private string checkout;
+        
+        // 체크아웃 및 현재 포커스 브랜치
+        public static string checkout;
+        public static string focus;
 
         // 브랜치 각도 간격
         private float angle;
@@ -34,6 +37,9 @@ namespace Model
         private BranchData main;
 
         private List<BranchData> develop;
+
+        // 체크아웃 버튼
+        [SerializeField] GameObject checkoutButton;
 
         // [임시] 더미 데이터
         public RepositoryData repositoryDummy;
@@ -81,7 +87,10 @@ namespace Model
             newBranch.ApplyTitle(data.title);
             for (int i = 0; i < data.commits.Length; i++)
                 newBranch.MakeCommit(data.commits[i]);
-            
+
+            // 체크아웃 버튼 참조
+            newBranch.LoadCheckout(checkoutButton);
+
             // 드래그 적용
             newObject.GetComponent<DragBranch>().Initialize();
 

@@ -38,6 +38,9 @@ namespace Model
         // 브랜치 이름
         [SerializeField] TextMeshPro title;
 
+        // 체크아웃 버튼
+        private GameObject checkout;
+
         private void Start()
         {
             addCount = 0;
@@ -92,6 +95,12 @@ namespace Model
         //    count++;
         //}
 
+        // 체크아웃 버튼 참조
+        public void LoadCheckout(GameObject button)
+        {
+            checkout = button;
+        }
+
         // 브랜치 이름 적용
         public void ApplyTitle(string _title)
         {
@@ -101,10 +110,10 @@ namespace Model
         private void OnMouseDown()
         {
             CameraMove.SetTarget(cameraTransform);
+            RepositoryModel.focus = title.text;
 
-            // git checkout 실행
-            InputManager.OutputControl("git checkout " + title.text + "\n");
-            CMDworker.input("git checkout " + title.text);
+            // 현재 브랜치가 아니면 체크아웃 버튼 활성화
+            checkout.SetActive(title.text != RepositoryModel.checkout);
         }
     }
 }
