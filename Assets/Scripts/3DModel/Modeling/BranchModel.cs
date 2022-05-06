@@ -41,6 +41,9 @@ namespace Model
         // 체크아웃 버튼
         private GameObject checkout;
 
+        // 스테이지 패널
+        private GameObject stage;
+
         private void Start()
         {
             addCount = 0;
@@ -101,6 +104,12 @@ namespace Model
             checkout = button;
         }
 
+        // 스테이지 패널 참조
+        public void LoadStage(GameObject panel)
+        {
+            stage = panel;
+        }
+
         // 브랜치 이름 적용
         public void ApplyTitle(string _title)
         {
@@ -112,8 +121,9 @@ namespace Model
             CameraMove.SetTarget(cameraTransform);
             RepositoryModel.focus = title.text;
 
-            // 현재 브랜치가 아니면 체크아웃 버튼 활성화
+            // 작업 브랜치인지에 따라 체크아웃 버튼, 스테이지 관리창 설정
             checkout.SetActive(title.text != RepositoryModel.checkout);
+            stage.SetActive(title.text == RepositoryModel.checkout);
         }
     }
 }

@@ -53,7 +53,7 @@ public class DragBranch : MonoBehaviour
             dragObject.SetActive(true);
             mouseDrag = true;
         }
-        if(Input.GetMouseButton(1) && mouseDrag)
+        if (Input.GetMouseButton(1) && mouseDrag)
         {
             // 마우스 위치 계산
             point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
@@ -77,23 +77,4 @@ public class DragBranch : MonoBehaviour
     {
         mouseIn = false;
     }
-
-    //    private void OnMouseDown()
-    //    {
-    //        // 보이게 하기
-    //        dragObject.SetActive(true);
-    //    }
-
-    //    private void OnMouseDrag()
-    //    {
-    //        // 마우스 위치 계산
-    //        point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
-    //        dragObject.transform.position = RatioApplied(point);
-    //    }
-
-    //    private void OnMouseUp()
-    //    {
-    //        // 숨기기
-    //        dragObject.SetActive(false);
-    //    }
 }

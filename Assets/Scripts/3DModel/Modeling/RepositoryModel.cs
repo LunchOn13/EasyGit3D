@@ -17,9 +17,6 @@ namespace Model
         // 마스터 브랜치 트랜스폼
         [SerializeField] Transform master;
 
-        // 카메라 이동
-        private CameraMove move;
-
         // 현재 브랜치와 매핑되는 카메라 위치
         private ConcurrentDictionary<string, Transform> cameras;
         
@@ -40,6 +37,9 @@ namespace Model
 
         // 체크아웃 버튼
         [SerializeField] GameObject checkoutButton;
+
+        // 스테이지 패널
+        [SerializeField] GameObject stagePanel;
 
         // [임시] 더미 데이터
         public RepositoryData repositoryDummy;
@@ -90,6 +90,9 @@ namespace Model
 
             // 체크아웃 버튼 참조
             newBranch.LoadCheckout(checkoutButton);
+
+            // 스테이지 패널 참조
+            newBranch.LoadStage(stagePanel);
 
             // 드래그 적용
             newObject.GetComponent<DragBranch>().Initialize();
