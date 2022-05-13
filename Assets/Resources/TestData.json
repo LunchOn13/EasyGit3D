@@ -1,0 +1,45 @@
+{
+  "checkout": "KJM",
+  "branches": [
+    {
+      "title": "KJM",
+      "commits": [
+        {
+          "message": "중돌수정",
+          "author": "jeong-mo1",
+          "date": "Tue Apr 19 2022 16:13:11"
+        },
+        {
+          "message": "newfile수정-무시-",
+          "author": "jeong-mo22",
+          "date": "Tue Apr 19 2022 16:10:18"
+        },
+        {
+          "message": "TestofJson",
+          "author": "jeong-mo333",
+          "date": "Sun Apr 17 2022 12:28:09"
+        }
+      ]
+    },
+    {
+      "title": "main",
+      "commits": [
+        {
+          "message": "main111",
+          "author": "main1",
+          "date": "Tue Apr 19 2022 16:13:11"
+        },
+        {
+          "message": "main22",
+          "author": "main22",
+          "date": "Tue Apr 19 2022 16:10:18"
+        },
+        {
+          "message": "Tmain3",
+          "author": "main333",
+          "date": "Sun Apr 17 2022 12:28:09"
+        }
+      ]
+    }
+  ]
+}

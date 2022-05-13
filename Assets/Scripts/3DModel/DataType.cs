@@ -8,6 +8,7 @@ namespace Model
     [System.Serializable]
     public class RepositoryData
     {
+        public string checkout;
         public BranchData[] branches;
     }
 
@@ -23,9 +24,19 @@ namespace Model
     [System.Serializable]
     public class CommitData
     {
-        public string title;
-        public string contributor;
+        public string message;
+        public string author;
         public string date;
-        public int type;
     }
+
+    // 모델링에 필요한 수정사항 데이터
+    [System.Serializable]
+    public class ModifiedData
+    {
+        public string title;
+        public string author;
+        public string date;
+        public string type;
+    }
+
 }

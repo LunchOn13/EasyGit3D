@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] Text output;           // 출력할 텍스트
     [SerializeField] ScrollRect scroll;     // 출력 스크롤
 
+
     private static Text cmdText;   // 출력 텍스트
     private static List<GameObject> outputList; // 출력 문장 리스트
 
@@ -55,7 +56,6 @@ public class InputManager : MonoBehaviour
         newText.GetComponent<Text>().text = s;
         newText.transform.parent = outputContent.transform;
 
-        
         // 문장 리스트에 추가
         outputList.Add(newText);
 

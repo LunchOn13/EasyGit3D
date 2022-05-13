@@ -25,19 +25,19 @@ namespace Model
 
         private MeshRenderer current;
 
-        private string title;
-        private string contributor;
+        private string message;
+        private string author;
         private string date;
 
         // 커밋 관련 오브젝트
-        private CommitPanel panel;
-        private CommitMessage message;
+        private CommitPanel commitPanel;
+        private CommitMessage commitMessage;
 
         private void Awake()
         {
             current = GetComponent<MeshRenderer>();
-            panel = GameObject.Find("Commit Panel").GetComponent<CommitPanel>();
-            message = GameObject.Find("Commit Message").GetComponent<CommitMessage>();
+            commitPanel = GameObject.Find("Commit Panel").GetComponent<CommitPanel>();
+            commitMessage = GameObject.Find("Commit Message").GetComponent<CommitMessage>();
         }
 
         // 커밋 종류에 따라 메터리얼 적용
@@ -66,25 +66,33 @@ namespace Model
             }
         }
 
+        // 커밋 정보 적용
+        public void SetInformation(string _title, string _author, string _date)
+        {
+            message = _title;
+            author = _author;
+            date = _date;
+        }
+
         // 마우스 오버 시 커밋메시지 표시
         private void OnMouseEnter()
         {
             current.material = highlight;
-            message.SetMessage("Sample", Input.mousePosition);
+            commitMessage.SetMessage(message, Input.mousePosition);
         }
 
         // 마우스 벗어나면 텍스트 숨김
         private void OnMouseExit()
         {
             current.material = current.material = finish;
-            message.SetMessage("", transform.position);
+            commitMessage.SetMessage("", transform.position);
         }
 
         // 클릭 시 패널 표시
         private void OnMouseDown()
         {
-            message.SetMessage("", transform.position);
-            panel.ShowPanel(Input.mousePosition, "Sameple Message", "Sample Author", "Sample Date");
+            commitMessage.SetMessage("", transform.position);
+            commitPanel.ShowPanel(Input.mousePosition, message, author, date);
         }
     }
 }
