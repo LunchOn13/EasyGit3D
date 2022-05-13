@@ -97,7 +97,6 @@ public class IslandEngine
         SetInfo();
         bash.Start();
         
-        // 이거 비동기로 읽는 거라는데 잘못 쓰고 있었을지도 모르겠따.
         bash.BeginOutputReadLine();
 
         // 에러 읽기 ( Progress 읽기 )
@@ -119,11 +118,10 @@ public class IslandEngine
         inputCommand = input;
         writer.WriteLine(input);
         writer.Flush();
-        if(input.Length >=3 && input[0] == 'c' && input[1] == 'd' && input[2] == ' ')
-        {
-            writer.WriteLine("pwd");
-            writer.Flush();
-        }
+        
+        // 항상 종료 시점에 제대로 끝났는지 확인하기 위한 용도
+        writer.WriteLine("echo $");
+        writer.Flush();
     }
 
     /// <summary>
@@ -160,6 +158,12 @@ To github.com:LunchOn13/Swimming_on_git.git
         // Collect the sort command output.
         if (!String.IsNullOrEmpty(outLine.Data))
         {
+            //UnityEngine.Debug.Log(outLine.Data);
+            if (outLine.Data == "$")
+            {
+                UnityEngine.Debug.Log("set isReadable !!!");
+                output.setIsOutput();
+            }
             output.AppendLine(outLine.Data);
         }
     }
