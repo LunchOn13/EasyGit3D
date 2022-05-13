@@ -6,7 +6,7 @@ using UnityEngine;
 public class CMDworker : MonoBehaviour
 {
     public static IslandEngine engine = new IslandEngine();
-
+    public static parsing pa = new parsing();
 
     // test를 위해 넣은 임시 변수
     // 삭제하고 error, output class 에 is reading 변수를 넣어야함
@@ -31,7 +31,7 @@ public class CMDworker : MonoBehaviour
 
     public static void output()
     {
-
+        UnityEngine.Debug.Log("output");
         if(engine.output.IsReadable())
         {
             UnityEngine.Debug.Log("lineofoutput " + engine.output.LineofOutput());
@@ -49,6 +49,21 @@ public class CMDworker : MonoBehaviour
             isReading = false;
         }
 
+    }
+
+    public void startParseLog()
+    {
+        string specialInput = "git log -100 --topo-order --branches --pretty=\"{%n\\\"CommitHash\\\" : \\\"%h\\\",%n\\\"Author\\\" : \\\"%an\\\",%n\\\"authorDate\\\" : \\\"%ai\\\",%n\\\"Message\\\" : \\\"%s\\\",%n\\\"ref\\\" : \\\"%D\\\"%n,\\\"ParentHash\\\" : \\\"%p\\\"%n},\"";
+        UnityEngine.Debug.Log(specialInput);
+        engine.WriteInput(specialInput);
+
+        UnityEngine.Debug.Log(engine.output.IsReadable());
+        while(!engine.output.IsReadable())
+        {
+            
+        }
+        UnityEngine.Debug.Log(engine.output.OutputLines());
+        pa.parseLog(engine.output.OutputLines());
     }
 
     public void error(string errorLine)

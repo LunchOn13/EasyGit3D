@@ -35,9 +35,11 @@ public class Output
     /// <param name="s"></param>
     public void AppendLine(string s)
     {
+        this.isOutput = false;
         this.output.AppendLine(s);
+        if (s == "$")
+            this.isOutput = true;
         this.lineCount++;
-        this.isOutput = true;
     }
 
     /// <summary>
@@ -46,13 +48,10 @@ public class Output
     /// <returns></returns>
     public string OutputLines()
     {
-        if (this.isOutput)
-        {
-            this.isOutput = false;
-            return this.output.ToString();
-        }
-        else
-            return null;
+        this.isOutput = false;
+        string s = this.output.ToString();
+        // $, \n 지우기
+        return s.Remove(s.Length - 4);
     }
 
     /// <summary>
@@ -65,4 +64,13 @@ public class Output
         this.isOutput = false;
     }
    
+    public void setIsOutput()
+    {
+        this.isOutput = true;
+    }
+
+    public void UnsetIsOutput()
+    {
+        this.isOutput = false;
+    }
 }
