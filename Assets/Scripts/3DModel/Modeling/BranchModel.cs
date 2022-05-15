@@ -21,6 +21,9 @@ namespace Model
 
         [SerializeField] Transform start;
 
+        // 카메라 트랜스폼
+        public Transform cameraTransform;
+
         // 커밋 종류별 개수
         private int addCount;
         private int modifyCount;
@@ -34,6 +37,12 @@ namespace Model
 
         // 브랜치 이름
         [SerializeField] TextMeshPro title;
+
+        // 체크아웃 버튼
+        private GameObject checkout;
+
+        // 스테이지 패널
+        private GameObject stage;
 
         private void Start()
         {
@@ -89,10 +98,32 @@ namespace Model
         //    count++;
         //}
 
+        // 체크아웃 버튼 참조
+        public void LoadCheckout(GameObject button)
+        {
+            checkout = button;
+        }
+
+        // 스테이지 패널 참조
+        public void LoadStage(GameObject panel)
+        {
+            stage = panel;
+        }
+
         // 브랜치 이름 적용
         public void ApplyTitle(string _title)
         {
             title.text = _title;
+        }
+
+        private void OnMouseDown()
+        {
+            CameraMove.SetTarget(cameraTransform);
+            RepositoryModel.focus = title.text;
+
+            // 작업 브랜치인지에 따라 체크아웃 버튼, 스테이지 관리창 설정
+            checkout.SetActive(title.text != RepositoryModel.checkout);
+            stage.SetActive(title.text == RepositoryModel.checkout);
         }
     }
 }

@@ -16,6 +16,9 @@ public class AdjustSize : MonoBehaviour
     [SerializeField] Color baseShadow;
     [SerializeField] Color highlightShadow;
 
+    // 정렬 기준
+    [SerializeField] bool left;
+
     private void Start()
     {
         Initialize();
@@ -36,6 +39,6 @@ public class AdjustSize : MonoBehaviour
     public void Adjust()
     {
         // 콘텐츠 사이즈 조정
-        content.sizeDelta = new Vector2(Input.mousePosition.x, content.sizeDelta.y);
+        content.sizeDelta = new Vector2(left ? Input.mousePosition.x : Screen.width - Input.mousePosition.x, content.sizeDelta.y);
     }
 }

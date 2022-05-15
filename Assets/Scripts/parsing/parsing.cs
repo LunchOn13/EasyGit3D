@@ -24,18 +24,18 @@ public class parsing {
         s = s.Insert(s.Length, "]");
 
         JArray json = JArray.Parse(s);
-        File.WriteAllText(@"F:\test.json", json.ToString());
+        File.WriteAllText(@"D:\test.json", json.ToString());
 
         string nowRef = "";
         foreach (var cont in json)
         {
-            UnityEngine.Debug.Log(cont);
+            //UnityEngine.Debug.Log(cont);
             if (cont["ref"].ToString() != "")
             {
-                UnityEngine.Debug.Log(nowRef +" " + cont["ref"].ToString());
+                //UnityEngine.Debug.Log(nowRef +" " + cont["ref"].ToString());
                 nowRef = cont["ref"].ToString();
             }
-            UnityEngine.Debug.Log(nowRef);
+            //UnityEngine.Debug.Log(nowRef);
             commit tmpCommit = new commit(
                 cont["CommitHash"],
                 cont["Author"],

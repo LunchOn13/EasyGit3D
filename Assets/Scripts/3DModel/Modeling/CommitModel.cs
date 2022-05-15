@@ -31,13 +31,13 @@ namespace Model
 
         // 커밋 관련 오브젝트
         private CommitPanel commitPanel;
-        private CommitMessage commitMessage;
+        private Message commitMessage;
 
         private void Awake()
         {
             current = GetComponent<MeshRenderer>();
             commitPanel = GameObject.Find("Commit Panel").GetComponent<CommitPanel>();
-            commitMessage = GameObject.Find("Commit Message").GetComponent<CommitMessage>();
+            commitMessage = GameObject.Find("Commit Message").GetComponent<Message>();
         }
 
         // 커밋 종류에 따라 메터리얼 적용
