@@ -31,7 +31,7 @@ public class CMDworker : MonoBehaviour
 
     public static void output()
     {
-        UnityEngine.Debug.Log("output");
+        //UnityEngine.Debug.Log("output");
         if(engine.output.IsReadable())
         {
             UnityEngine.Debug.Log("lineofoutput " + engine.output.LineofOutput());
@@ -51,18 +51,18 @@ public class CMDworker : MonoBehaviour
 
     }
 
-    public void startParseLog()
+    public static void startParseLog()
     {
-        string specialInput = "git log -100 --topo-order --branches --pretty=\"{%n\\\"CommitHash\\\" : \\\"%h\\\",%n\\\"Author\\\" : \\\"%an\\\",%n\\\"authorDate\\\" : \\\"%ai\\\",%n\\\"Message\\\" : \\\"%s\\\",%n\\\"ref\\\" : \\\"%D\\\"%n,\\\"ParentHash\\\" : \\\"%p\\\"%n},\"";
-        UnityEngine.Debug.Log(specialInput);
+        string specialInput = "git log -20 --topo-order --branches --pretty=\"{%n\\\"CommitHash\\\" : \\\"%h\\\",%n\\\"Author\\\" : \\\"%an\\\",%n\\\"authorDate\\\" : \\\"%ai\\\",%n\\\"Message\\\" : \\\"%s\\\",%n\\\"ref\\\" : \\\"%D\\\"%n,\\\"ParentHash\\\" : \\\"%p\\\"%n},\"";
+        //UnityEngine.Debug.Log(specialInput);
         engine.WriteInput(specialInput);
 
-        UnityEngine.Debug.Log(engine.output.IsReadable());
+        //UnityEngine.Debug.Log(engine.output.IsReadable());
         while(!engine.output.IsReadable())
         {
             
         }
-        UnityEngine.Debug.Log(engine.output.OutputLines());
+        //UnityEngine.Debug.Log(engine.output.OutputLines());
         pa.parseLog(engine.output.OutputLines());
     }
 

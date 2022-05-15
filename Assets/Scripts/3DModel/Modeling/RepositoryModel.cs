@@ -41,22 +41,97 @@ namespace Model
         // 스테이지 패널
         [SerializeField] GameObject stagePanel;
 
-        // [임시] 더미 데이터
-        public RepositoryData repositoryDummy;
+        // 레포지토리 데이터
+        private Dictionary<string, commit> commitDictionary;
+        private RepositoryData repositoryData;
 
         private void Start()
         {
             develop = new List<BranchData>();
             cameras = new ConcurrentDictionary<string, Transform>();
+            repositoryData = new RepositoryData();
+        }
 
-            // [임시] 불러오기 시험
-            repositoryDummy = JsonUtility.FromJson<RepositoryData>((Resources.Load("TestData") as TextAsset).ToString());
+        // 레포지토리 데이터 불러옴
+        public void GetRepositoryData()
+        {
+            CMDworker.startParseLog();
+            commitDictionary = CMDworker.pa.branches;
 
+            repositoryData.branches = new List<BranchData>();
+
+            string branchName = "";
+            string lastParent = "";
+            BranchData currentBranch = null;
+
+            foreach (string key in commitDictionary.Keys)
+            {
+                // MAIN이 마지막이라고 가정해야 할 수 있음..
+                if(branchName == "main")
+                {
+                    if (key == lastParent)
+                    {
+                        repositoryData.branches.Add(currentBranch);
+                        break;
+                    }
+                }
+
+                string currentParent = commitDictionary[key].parentHash[0];
+
+                // REF 이름이 존재
+                if (commitDictionary[key].theRef[0] != "")
+                {
+                    // MERGE 이후니 패스
+                    if (branchName == "main" && commitDictionary[key].parentHash.Length > 1)
+                        continue;
+
+                    bool checkout = false;
+                    string lastBranchName = branchName;
+
+                    // 브랜치 이름 및 체크아웃 확인
+                    foreach (string current in commitDictionary[key].theRef)
+                    {
+                        if (current.Contains("origin/") && !current.Contains("HEAD"))
+                        {
+                            branchName = current.Trim();
+                            branchName = branchName.Remove(0, 7);
+                        }
+
+                        if (!current.Contains("origin/") && !current.Contains("HEAD"))
+                            branchName = current.Trim();
+
+                        if (current.Contains("HEAD ->"))
+                            checkout = true;
+                    }
+
+                    if (checkout) repositoryData.checkout = branchName;
+
+                    currentParent = commitDictionary[key].parentHash[0];
+
+                    if (branchName != lastBranchName)
+                    { 
+                        if(currentBranch != null)
+                            repositoryData.branches.Add(currentBranch);
+
+                        currentBranch = new BranchData(branchName);
+                        lastParent = currentParent;
+                    }
+                }
+
+                currentBranch.commits.Add(new CommitData(commitDictionary[key].message, commitDictionary[key].author, commitDictionary[key].time.ToString()));
+            }
+
+            BuildRepository();
+        }
+
+        // 레포지토리 모델링
+        private void BuildRepository()
+        {
             // 현재 체크아웃 브랜치
-            checkout = repositoryDummy.checkout;
+            checkout = repositoryData.checkout;
 
             // 브랜치 분류
-            foreach (BranchData branch in repositoryDummy.branches)
+            foreach (BranchData branch in repositoryData.branches)
             {
                 // 메인 브랜치
                 if (branch.title == "main")
@@ -85,7 +160,7 @@ namespace Model
 
             // 브랜치 정보 적용
             newBranch.ApplyTitle(data.title);
-            for (int i = 0; i < data.commits.Length; i++)
+            for (int i = 0; i < data.commits.Count; i++)
                 newBranch.MakeCommit(data.commits[i]);
 
             // 체크아웃 버튼 참조
