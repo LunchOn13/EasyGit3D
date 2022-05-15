@@ -44,6 +44,7 @@ namespace Model
         // 레포지토리 데이터
         private Dictionary<string, commit> commitDictionary;
         private RepositoryData repositoryData;
+ 
 
         private void Start()
         {
@@ -61,30 +62,13 @@ namespace Model
             repositoryData.branches = new List<BranchData>();
 
             string branchName = "";
-            string lastParent = "";
             BranchData currentBranch = null;
 
             foreach (string key in commitDictionary.Keys)
             {
-                // MAIN이 마지막이라고 가정해야 할 수 있음..
-                if(branchName == "main")
-                {
-                    if (key == lastParent)
-                    {
-                        repositoryData.branches.Add(currentBranch);
-                        break;
-                    }
-                }
-
-                string currentParent = commitDictionary[key].parentHash[0];
-
                 // REF 이름이 존재
                 if (commitDictionary[key].theRef[0] != "")
                 {
-                    // MERGE 이후니 패스
-                    if (branchName == "main" && commitDictionary[key].parentHash.Length > 1)
-                        continue;
-
                     bool checkout = false;
                     string lastBranchName = branchName;
 
@@ -101,20 +85,27 @@ namespace Model
                             branchName = current.Trim();
 
                         if (current.Contains("HEAD ->"))
+                        {
+                            branchName = current.Trim().Remove(0, 8);
                             checkout = true;
+                        }
                     }
 
                     if (checkout) repositoryData.checkout = branchName;
 
-                    currentParent = commitDictionary[key].parentHash[0];
-
                     if (branchName != lastBranchName)
-                    { 
-                        if(currentBranch != null)
+                    {
+                        if (currentBranch != null)
                             repositoryData.branches.Add(currentBranch);
 
                         currentBranch = new BranchData(branchName);
-                        lastParent = currentParent;
+
+                        // MAIN이 마지막이라고 가정해야 할 수 있음..
+                        if (branchName == "main")
+                        {
+                            repositoryData.branches.Add(currentBranch);
+                            break;
+                        }
                     }
                 }
 
@@ -146,6 +137,8 @@ namespace Model
 
             MadeBranch(main).transform.position = master.position;
             LocateAllBranch();
+
+            Debug.Log("Checkout: " + checkout);
 
             // 카메라 현재 체크아웃 브랜치에 고정
             Camera.main.transform.position = cameras[checkout].position;
