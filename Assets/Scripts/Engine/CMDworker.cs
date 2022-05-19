@@ -29,7 +29,7 @@ public class CMDworker : MonoBehaviour
         engine.WriteInput(s);
     }
 
-    public static void output()
+    public void output()
     {
         //UnityEngine.Debug.Log("output");
         if(engine.output.IsReadable())
@@ -64,6 +64,41 @@ public class CMDworker : MonoBehaviour
         }
         //UnityEngine.Debug.Log(engine.output.OutputLines());
         pa.parseLog(engine.output.OutputLines());
+    }
+
+    public void startParseStatus()
+    {
+        string specialInput = "git status --porcelain=v1";
+        //UnityEngine.Debug.Log(specialInput);
+        engine.WriteInput(specialInput);
+
+        //UnityEngine.Debug.Log(engine.output.IsReadable());
+        while (!engine.output.IsReadable())
+        {
+
+        }
+        //UnityEngine.Debug.Log(engine.output.OutputLines());
+        pa.parseStatus(engine.output.OutputLines());
+
+        //UnityEngine.Debug.Log(pa.GetStatusList());
+        //foreach (var tmp in pa.GetStatusList())
+        //{
+        //    UnityEngine.Debug.Log(tmp.GetXstatus() + " " + tmp.GetYstatus() + " " + tmp.GetPath());
+        //}
+
+        specialInput = "git status --porcelain=v2 --branch";
+        //UnityEngine.Debug.Log(specialInput);
+        engine.WriteInput(specialInput);
+
+        //UnityEngine.Debug.Log(engine.output.IsReadable());
+        while (!engine.output.IsReadable())
+        {
+
+        }
+        //UnityEngine.Debug.Log(engine.output.OutputLines());
+        pa.parseAB(engine.output.OutputLines());
+
+        //UnityEngine.Debug.Log(pa.GetOid() + "\n" + pa.GetnowBranch() + "\n" + pa.GetUpstream() + "\n" + pa.GetBranchAB_p() + " " + pa.GetBranchAB_m());
     }
 
     public void error(string errorLine)
