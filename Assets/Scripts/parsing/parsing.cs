@@ -9,6 +9,15 @@ public class parsing {
 
     public Dictionary<string, commit> branches = new Dictionary<string, commit>();
 
+    public List<Status> StatusList = new List<Status>();
+
+    private int branchAB_p = 0;
+    private int branchAB_m = 0;
+
+    private string nowBranch = null;
+    private string upstream = null;
+    private string oid = null;
+
 
     public Dictionary<string, commit> parsedDic()
     {
@@ -47,37 +56,98 @@ public class parsing {
 
             branches.Add(cont["CommitHash"].ToString(), tmpCommit);
         }
-
-        //foreach(var tmp in branches)
-        //{
-        //    string ss = tmp.Key + " parenthash is ";
-        //    foreach( var tt in tmp.Value.theRef)
-        //    {
-        //        ss += tt.ToString() + " ";
-        //    }
-        //    UnityEngine.Debug.Log(ss);
-        //}
         
     }
 
 
-    void constructData(string s)
-    {
 
+    public List<Status> GetStatusList()
+    {
+        return this.StatusList;
     }
 
 
-
-    void parseStatus(string s)
+    /*
+     * status 를 파싱하여 list에 저장한다
+     * 
+     * Status의 형식은 X Y path
+     */
+    public void parseStatus(string s)
     {
+        UnityEngine.Debug.Log("start parse Status");
+        StatusList.Clear();
 
+        StringReader strReader = new StringReader(s);
+        string theLine = null;
+        while(true)
+        {
+            theLine = strReader.ReadLine();
+            if(theLine == null)
+                break;
+
+            Status tmp = new Status(theLine[0], theLine[1], theLine.Substring(2));
+            StatusList.Add(tmp);
+        }
     }
 
-    // 굳이?
-    void parseBranch(string s)
+    public int GetBranchAB_p()
     {
-
+        return this.branchAB_p;
     }
 
-   
+    public int GetBranchAB_m()
+    {
+        return this.branchAB_m;
+    }
+
+    public string GetnowBranch()
+    {
+        return this.nowBranch;
+    }
+
+    public string GetUpstream()
+    {
+        return this.upstream;
+    }
+
+    public string GetOid()
+    {
+        return this.oid;
+    }
+
+    /*
+     * upstream과 비교하여 현재 로컬 branch의 commit 상태를 지시한다.
+     */
+    public void parseAB(string s)
+    {
+        StringReader strReader = new StringReader(s);
+        string theLine = null;
+        int count = 0;
+        while(true)
+        {
+            theLine = strReader.ReadLine();
+            if (theLine == null || count > 4)
+                break;
+            count++;
+            string[] tmp = theLine.Split(' ');
+
+            switch(count)
+            {
+                case 1:
+                    this.oid = tmp[2];
+                    break;
+                case 2:
+                    this.nowBranch = tmp[2];
+                    break;
+                case 3:
+                    this.upstream = tmp[2];
+                    break;
+                case 4:
+                    this.branchAB_p = Int32.Parse(tmp[2].Substring(1));
+                    this.branchAB_m = Int32.Parse(tmp[3]);
+                    break;
+            }
+        }
+
+    }
 }
