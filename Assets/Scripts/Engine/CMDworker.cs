@@ -66,7 +66,7 @@ public class CMDworker : MonoBehaviour
         pa.parseLog(engine.output.OutputLines());
     }
 
-    public void startParseStatus()
+    public static void startParseStatus()
     {
         string specialInput = "git status --porcelain=v1";
         //UnityEngine.Debug.Log(specialInput);

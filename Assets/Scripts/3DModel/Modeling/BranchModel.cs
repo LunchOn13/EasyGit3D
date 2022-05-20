@@ -11,23 +11,24 @@ namespace Model
     /// </summary>
     public class BranchModel : MonoBehaviour
     {
-        // 커밋 오브젝트 프리팹
-        [SerializeField] GameObject commit;
+        [SerializeField] GameObject commitModel;
+        [SerializeField] GameObject statusModel;
 
-        // 갓 커밋의 시작 트랜스폼
-        [SerializeField] Transform addTransform;
-        [SerializeField] Transform modifyTransform;
-        [SerializeField] Transform deleteTransform;
+        // 변경 사항 모델의 시작 트랜스폼
+        [SerializeField] Transform addedTransform;
+        [SerializeField] Transform modifiedTransform;
+        [SerializeField] Transform deletedTransform;
+        [SerializeField] Transform untrackedTransform;
 
         [SerializeField] Transform start;
 
-        // 카메라 트랜스폼
         public Transform cameraTransform;
 
-        // 커밋 종류별 개수
-        private int addCount;
-        private int modifyCount;
-        private int deleteCount;
+        // 변경사항 종류별 개수
+        private int addedCount;
+        private int modifiedCount;
+        private int deletedCount;
+        private int untrackedCount;
 
         // 커밋 개수
         private int count;
@@ -46,9 +47,10 @@ namespace Model
 
         private void Start()
         {
-            addCount = 0;
-            modifyCount = 0;
-            deleteCount = 0;
+            addedCount = 0;
+            modifiedCount = 0;
+            deletedCount = 0;
+            untrackedCount = 0;
             
             count = 0;
         }
@@ -56,31 +58,9 @@ namespace Model
         // 커밋 오브젝트 생성
         public void MakeCommit(CommitData data)
         {
-            GameObject newObject = Instantiate(commit);
+            GameObject newObject = Instantiate(commitModel);
             CommitModel newCommit = newObject.GetComponent<CommitModel>();
             newObject.transform.parent = transform;
-
-            //switch ((CommitCategory)data.type)
-            //{
-            //    case CommitCategory.Add:
-            //        BuildCommit(addTransform, ref addCount, CommitCategory.Add);
-            //        break;
-
-            //    case CommitCategory.Modify:
-            //        BuildCommit(modifyTransform, ref modifyCount, CommitCategory.Modify);
-            //        break;
-
-            //    case CommitCategory.Delete:
-            //        BuildCommit(deleteTransform, ref deleteCount, CommitCategory.Delete);
-            //        break;
-
-            //    case CommitCategory.Finish:
-            //        BuildCommit(finishTransform, ref finishCount, CommitCategory.Finish);
-            //        break;
-
-            //    default:
-            //        break;
-            //}
 
             // 모델 좌표 설정 및 정보 적용
             newObject.transform.position = start.position;
@@ -89,14 +69,55 @@ namespace Model
             count++;
         }
 
-        // 종류에 따른 커밋 오브젝트 생성
-        //private void BuildCommit(Transform start, ref int count, CommitCategory type)
-        //{
-        //    newObject.transform.position = start.position;
-        //    newObject.transform.Translate(0f, count * distance, 0f);
-        //    newCommit.ApplyMaterial(type);
-        //    count++;
-        //}
+        // 변경사항 오브젝트 생성
+        public void MakeStatusModel(Status status)
+        {
+            StatusModel newStatus = null;
+
+            switch (status.GetYstatus())
+            {
+                // Added
+                case 'A':
+                    newStatus = BuildedStatusModel(addedTransform, ref addedCount, StatusCategory.Added);
+                    break;
+
+                // Modified
+                case 'M':
+                    newStatus = BuildedStatusModel(modifiedTransform, ref modifiedCount, StatusCategory.Modified);
+                    break;
+
+                // Deleted
+                case 'D':
+                    newStatus = BuildedStatusModel(deletedTransform, ref deletedCount, StatusCategory.Deleted);
+                    break;
+
+                // Untracked
+                case '?':
+                    newStatus = BuildedStatusModel(untrackedTransform, ref untrackedCount, StatusCategory.Untracked);
+                    break;
+
+                default:
+                    break;
+            }
+
+            newStatus.SetInformation(status.GetPath());
+        }
+
+        private StatusModel BuildedStatusModel(Transform start, ref int count, StatusCategory type)
+        {
+            GameObject newObject = Instantiate(statusModel);
+            newObject.transform.position = start.position;
+            newObject.transform.Translate(0f, count * distance, 0f);
+            newObject.transform.parent = transform;
+
+            StatusModel newStatus = newObject.GetComponent<StatusModel>();
+            newStatus.ApplyMaterial(type);
+            newStatus.SetBelongBranch(this);
+
+            count++;
+
+            return newStatus;
+        }
 
         // 체크아웃 버튼 참조
         public void LoadCheckout(GameObject button)

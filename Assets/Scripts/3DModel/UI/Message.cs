@@ -11,8 +11,32 @@ namespace Model
     /// </summary>
     public class Message : MonoBehaviour
     {
+        private static Message instance;
+        public static Message Instance
+        {
+            get
+            {
+                if (null == instance)
+                    return null;
+
+                return instance;
+            }
+        }
+
         [SerializeField] Text message;
         [SerializeField] float distance;
+
+        private void Awake()
+        {
+            if(null == instance)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {

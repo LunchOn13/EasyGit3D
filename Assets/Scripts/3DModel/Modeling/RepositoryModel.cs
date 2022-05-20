@@ -48,8 +48,10 @@ namespace Model
         // 레포지토리 데이터
         private Dictionary<string, commit> commitDictionary;
         private RepositoryData repositoryData;
- 
 
+        // 스테이터스 데이터
+        private List<Status> statusList;
+ 
         private void Start()
         {
             develop = new List<BranchData>();
@@ -119,6 +121,13 @@ namespace Model
             BuildRepository();
         }
 
+        // 변경사항 정보 불러옴
+        public void GetStatusData()
+        {
+            CMDworker.startParseStatus();
+            statusList = CMDworker.pa.StatusList;
+        }
+
         // 레포지토리 모델링
         private void BuildRepository()
         {
@@ -158,8 +167,16 @@ namespace Model
 
             // 브랜치 정보 적용
             newBranch.ApplyTitle(data.title);
+
             for (int i = 0; i < data.commits.Count; i++)
                 newBranch.MakeCommit(data.commits[i]);
+
+            // 현재 체크아웃 브랜치면 스테이터스 모델도 생성
+            if(data.title == checkout)
+            {
+                for (int i = 0; i < statusList.Count; i++)
+                    newBranch.MakeStatusModel(statusList[i]);
+            }
 
             // 체크아웃 버튼 참조
             newBranch.LoadCheckout(checkoutButton);
