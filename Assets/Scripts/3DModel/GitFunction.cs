@@ -27,5 +27,35 @@ namespace Model
             InputManager.OutputControl("git checkout " + RepositoryModel.focus + "\n");
             CMDworker.input("git checkout " + RepositoryModel.focus);
         }
+
+        public static void AddFile(string path)
+        {
+            InputManager.OutputControl("git add " + path + "\n");
+            CMDworker.input("git add " + path);
+        }
+
+        public static void AddAllFiles()
+        {
+            InputManager.OutputControl("git add ." + "\n");
+            CMDworker.input("git add .");
+        }
+
+        public static void RestoreFile(string path)
+        {
+            InputManager.OutputControl("git restore --staged " + path + "\n");
+            CMDworker.input("git restore --staged " + path);
+        }
+
+        public static void RestoreAllFiles()
+        {
+            InputManager.OutputControl("git restore --staged ." + "\n");
+            CMDworker.input("git restore --staged .");
+        }
+
+        public void PushAll()
+        {
+            InputManager.OutputControl("git push" + "\n");
+            CMDworker.input("git push");
+        }
     }
 }

@@ -98,6 +98,14 @@ MonoBehaviour:
   modifiedMaterial: {fileID: 2100000, guid: 4aa5444b14748ab44b3cab962974e14d, type: 2}
   deletedMaterial: {fileID: 2100000, guid: 586475f24053fde44b4a96cef0510af5, type: 2}
   untrackedMaterial: {fileID: 2100000, guid: 7a12d400d03579142bffb6a0693933b2, type: 2}
+  addedHighlightMaterial: {fileID: 2100000, guid: 22d37399737a4af458e23ef380ca8376,
+    type: 2}
+  modifiedHighlightMaterial: {fileID: 2100000, guid: 726f54594145f604a8616f796c459e32,
+    type: 2}
+  deletedHighlightMaterial: {fileID: 2100000, guid: ae8d3ad2d96f38245aef42b3061b88e6,
+    type: 2}
+  untrackedHighlightMaterial: {fileID: 2100000, guid: 0545e333176fbf947a23355ce3cd44f5,
+    type: 2}
 --- !u!136 &2417715644080306709
 CapsuleCollider:
   m_ObjectHideFlags: 0

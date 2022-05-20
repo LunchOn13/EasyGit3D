@@ -23,7 +23,8 @@ namespace Model
             }
         }
 
-        [SerializeField] Text message;
+        private Text message;
+
         [SerializeField] float distance;
 
         private void Awake()
@@ -40,10 +41,10 @@ namespace Model
 
         private void Start()
         {
+            message = GetComponent<Text>();
             message.text = "";
         }
 
-        // 커밋 메시지에 따라 텍스트 크기 및 위치 설정
         public void SetMessage(string text, Vector3 position)
         {
             // 텍스트 크기 설정

@@ -15,6 +15,7 @@ namespace Model
         
         private Material baseMaterial;
         private Material highlightMaterial;
+        private AddPanel addPanel;
 
         private string path;
 
@@ -23,9 +24,15 @@ namespace Model
         [SerializeField] Material deletedMaterial;
         [SerializeField] Material untrackedMaterial;
 
-        private void Awake()
+        [SerializeField] Material addedHighlightMaterial;
+        [SerializeField] Material modifiedHighlightMaterial;
+        [SerializeField] Material deletedHighlightMaterial;
+        [SerializeField] Material untrackedHighlightMaterial;
+
+        public void Initialize()
         {
             meshRenderer = GetComponent<MeshRenderer>();
+            addPanel = GameObject.Find("Add Panel").GetComponent<AddPanel>();
         }
 
         public void SetBelongBranch(BranchModel branch)
@@ -36,6 +43,12 @@ namespace Model
         public void SetInformation(string _path)
         {
             path = _path;
+            addPanel.AddStatusModel(this);
+        }
+
+        public string GetPath()
+        {
+            return path;
         }
 
         public void ApplyMaterial(StatusCategory category)
@@ -46,36 +59,55 @@ namespace Model
                 case StatusCategory.Added:
                     meshRenderer.material = addedMaterial;
                     baseMaterial = addedMaterial;
+                    highlightMaterial = addedHighlightMaterial;
                     break;
 
                 case StatusCategory.Modified:
                     meshRenderer.material = modifiedMaterial;
                     baseMaterial = modifiedMaterial;
+                    highlightMaterial = modifiedHighlightMaterial;
                     break;
 
                 case StatusCategory.Deleted:
                     meshRenderer.material = deletedMaterial;
                     baseMaterial = deletedMaterial;
+                    highlightMaterial = deletedHighlightMaterial;
                     break;
 
                 case StatusCategory.Untracked:
                     meshRenderer.material = untrackedMaterial;
                     baseMaterial = untrackedMaterial;
+                    highlightMaterial = untrackedHighlightMaterial;
                     break;
 
                 default:
                     break;
             }
         }
+
+        public void HighlightModel()
+        {
+            meshRenderer.material = highlightMaterial;
+        }
+
+        public void ReturnBaseModel()
+        {
+            meshRenderer.material = baseMaterial;
+        }
+
         private void OnMouseEnter()
         {
-            //meshRenderer.material = highlightMaterial;
             Message.Instance.SetMessage(path, Input.mousePosition);
+        }
+
+        private void OnMouseDown()
+        {
+            if(!StageManager.CheckStatusModel(path))
+                addPanel.ShowPanel(Input.mousePosition, path);
         }
 
         private void OnMouseExit()
         {
-            //meshRenderer.material = baseMaterial;
             Message.Instance.SetMessage("", transform.position);
         }
     }

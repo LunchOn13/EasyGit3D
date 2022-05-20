@@ -111,6 +111,7 @@ namespace Model
             newObject.transform.parent = transform;
 
             StatusModel newStatus = newObject.GetComponent<StatusModel>();
+            newStatus.Initialize();
             newStatus.ApplyMaterial(type);
             newStatus.SetBelongBranch(this);
 

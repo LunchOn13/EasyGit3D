@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,49 +10,58 @@ namespace Model
     /// 작성자 : 곽진성
     /// 기능 : 스테이지된 파일 관리
     /// </summary>
-    public class StageManager : ContentCheck
+    public class StageManager : MonoBehaviour
     {
-        [SerializeField] Text stage;
-        [SerializeField] GameObject commit;
+        [SerializeField] Transform stageList;
+        [SerializeField] GameObject pushPanel;
 
-        private new void Start()
+        private static ConcurrentDictionary<string, StatusModel> stageModelDictionary;
+
+        private void Start()
         {
-            commit.SetActive(false);
-            base.Start();
+            stageModelDictionary = new ConcurrentDictionary<string, StatusModel>();
+            pushPanel.SetActive(false);
         }
 
-        // 파일 추가
-        public void AddFile(string file)
+        public void OpenPushPanel()
         {
-            // 입력한 파일 생성
-            GameObject newFile = Instantiate(stage.gameObject);
-            newFile.GetComponent<Text>().text = file;
-
-            newFile.transform.parent = GetContent();
-            Check();
+            // 스테이지 파일이 있으면 표시
+            if (stageList.childCount > 0)
+                pushPanel.SetActive(true);
         }
 
-        // 파일 제거
-        public void DeleteFile(string file)
+        public void DeleteAllStageModels()
         {
-            // 해당 파일 찾기
-            foreach (Text current in GetContent().GetComponentsInChildren<Text>())
-            {
-                // 제거
-                if (current.text == file)
-                {
-                    Destroy(current.gameObject);
-                    return;
-                }
-            }
+            if (stageList.childCount == 0)
+                return;
 
-            Check();
+            GitFunction.RestoreAllFiles();
+
+            // 스테이지 패널 리스트 초기화
+            Transform[] childList = stageList.GetComponentsInChildren<Transform>();
+            for (int i = 1; i < childList.Length; i++)
+                Destroy(childList[i].gameObject);
+
+            foreach (string path in stageModelDictionary.Keys)
+                DeleteStatusModel(path);
         }
 
-        // 커밋창 표시
-        public void OpenCommitPanel()
+        // 해당 파일이 존재하는지 확인
+        public static bool CheckStatusModel(string path)
         {
-            commit.SetActive(true);
+            return stageModelDictionary.ContainsKey(path);
+        }
+
+        public static void AddStatusModel(StatusModel statusModel)
+        {
+            stageModelDictionary[statusModel.GetPath()] = statusModel;
+        }
+
+        public static void DeleteStatusModel(string path)
+        {
+            StatusModel deletedStatusModel;
+            if (stageModelDictionary.TryRemove(path, out deletedStatusModel))
+                deletedStatusModel.ReturnBaseModel();
         }
     }
 }
