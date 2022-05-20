@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Model
 {
@@ -37,6 +38,9 @@ namespace Model
 
         // 체크아웃 버튼
         [SerializeField] GameObject checkoutButton;
+
+        // 체크아웃 텍스트
+        [SerializeField] Text checkoutText;
 
         // 스테이지 패널
         [SerializeField] GameObject stagePanel;
@@ -120,6 +124,7 @@ namespace Model
         {
             // 현재 체크아웃 브랜치
             checkout = repositoryData.checkout;
+            checkoutText.text = checkout;
 
             // 브랜치 분류
             foreach (BranchData branch in repositoryData.branches)

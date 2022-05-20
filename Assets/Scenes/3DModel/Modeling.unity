@@ -2343,6 +2343,7 @@ MonoBehaviour:
   branch: {fileID: 8178161927296046884, guid: 11214b97f3841b74ba459466bf12fddf, type: 3}
   master: {fileID: 8178161926391173713}
   checkoutButton: {fileID: 467384173}
+  checkoutText: {fileID: 1066471}
   stagePanel: {fileID: 1478024414}
 --- !u!4 &821778610
 Transform:
