@@ -77,6 +77,10 @@ public class parsing {
         UnityEngine.Debug.Log("start parse Status");
         StatusList.Clear();
 
+        // 임시 방편
+        if (s == "$")
+            return;
+
         StringReader strReader = new StringReader(s);
         string theLine = null;
         while(true)
