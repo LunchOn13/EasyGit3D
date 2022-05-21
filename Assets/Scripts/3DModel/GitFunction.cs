@@ -52,7 +52,13 @@ namespace Model
             CMDworker.input("git restore --staged .");
         }
 
-        public void PushAll()
+        public static void Commit(string message)
+        {
+            InputManager.OutputControl("git commit -m \"" + message + "\"\n");
+            CMDworker.input("git commit -m \"" + message + "\"");
+        }
+
+        public static void Push()
         {
             InputManager.OutputControl("git push" + "\n");
             CMDworker.input("git push");

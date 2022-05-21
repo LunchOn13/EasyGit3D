@@ -60,7 +60,7 @@ namespace Model
                 statusModel.HighlightModel();
         }
 
-        private void AddStageFile(StatusModel statusModel)
+        public void AddStageFile(StatusModel statusModel)
         {
             GameObject newStageFile = Instantiate(statusFile);
             newStageFile.transform.parent = stageList.transform;

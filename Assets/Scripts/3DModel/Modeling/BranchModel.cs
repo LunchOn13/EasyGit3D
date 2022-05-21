@@ -74,33 +74,44 @@ namespace Model
         {
             StatusModel newStatus = null;
 
-            switch (status.GetYstatus())
+            Debug.Log("1. " + status.GetXstatus() + " 2. " + status.GetYstatus() + "3. " + status.GetPath());
+
+            newStatus = ClassifiedStatusModel(status.GetYstatus());
+
+            if (newStatus != null)
+                newStatus.SetInformation(status.GetPath());
+            else
+            {
+                // 현재 스테이지된 파일
+                newStatus = ClassifiedStatusModel(status.GetXstatus());
+                newStatus.SetInformation(status.GetPath());
+                newStatus.StageStatusModel();
+                newStatus.HighlightModel();
+            }
+        }
+
+        private StatusModel ClassifiedStatusModel(char status)
+        {
+            switch (status)
             {
                 // Added
                 case 'A':
-                    newStatus = BuildedStatusModel(addedTransform, ref addedCount, StatusCategory.Added);
-                    break;
+                    return BuildedStatusModel(addedTransform, ref addedCount, StatusCategory.Added);
 
                 // Modified
                 case 'M':
-                    newStatus = BuildedStatusModel(modifiedTransform, ref modifiedCount, StatusCategory.Modified);
-                    break;
+                    return BuildedStatusModel(modifiedTransform, ref modifiedCount, StatusCategory.Modified);
 
                 // Deleted
                 case 'D':
-                    newStatus = BuildedStatusModel(deletedTransform, ref deletedCount, StatusCategory.Deleted);
-                    break;
-
+                    return BuildedStatusModel(deletedTransform, ref deletedCount, StatusCategory.Deleted);
+                    
                 // Untracked
                 case '?':
-                    newStatus = BuildedStatusModel(untrackedTransform, ref untrackedCount, StatusCategory.Untracked);
-                    break;
-
-                default:
-                    break;
+                    return BuildedStatusModel(untrackedTransform, ref untrackedCount, StatusCategory.Untracked);
             }
 
-            newStatus.SetInformation(status.GetPath());
+            return null;
         }
 
         private StatusModel BuildedStatusModel(Transform start, ref int count, StatusCategory type)

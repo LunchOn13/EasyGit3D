@@ -95,6 +95,11 @@ namespace Model
             meshRenderer.material = baseMaterial;
         }
 
+        public void StageStatusModel()
+        {
+            addPanel.AddStageFile(this);
+        }
+
         private void OnMouseEnter()
         {
             Message.Instance.SetMessage(path, Input.mousePosition);
