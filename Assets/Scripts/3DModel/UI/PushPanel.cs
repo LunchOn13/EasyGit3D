@@ -13,10 +13,20 @@ namespace Model
     {
         [SerializeField] Text commit;
 
-        public void CommitAndPush()
+        public void CommitAndPushFiles()
+        {
+            StartCoroutine(CommitAndPush());
+        }
+
+        private IEnumerator CommitAndPush()
         {
             GitFunction.Commit(commit.text);
+            yield return new WaitUntil(() => CMDworker.engine.output.IsReadable() == true);
+
+            Debug.Log("PUSH");
+
             GitFunction.Push();
+            yield return null;
         }
     }
 }

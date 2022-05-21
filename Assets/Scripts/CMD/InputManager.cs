@@ -13,7 +13,6 @@ public class InputManager : MonoBehaviour
     [SerializeField] Text output;           // 출력할 텍스트
     [SerializeField] ScrollRect scroll;     // 출력 스크롤
 
-
     private static Text cmdText;   // 출력 텍스트
     private static List<GameObject> outputList; // 출력 문장 리스트
 
@@ -27,7 +26,7 @@ public class InputManager : MonoBehaviour
         // output_text = GameObject.Find("Log").GetComponent<Text>();
 
         cmdText = Resources.Load<GameObject>("CMD/Log").GetComponent<Text>();
-        outputContent = GameObject.Find("Content");
+        outputContent = GameObject.Find("Command Content");
 
         // 출력 문장 모두 초기화
         for(int i = 0; i < outputContent.transform.childCount; i++)
@@ -40,7 +39,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
             ConductInput();
-        //CMDworker.output();
+        CMDworker.output();
 
         if (isUpdateScroll)
         {
@@ -66,10 +65,8 @@ public class InputManager : MonoBehaviour
     // 입력 텍스트 처리
     public void ConductInput()
     {
+        OutputControl(input.text + "\n");
         CMDworker.input(input.text);
-
-        // 입력 텍스트 초기화
-        input.text = "";
 
         // 스크롤 위치 아래로 세팅
         UpdateScroll();

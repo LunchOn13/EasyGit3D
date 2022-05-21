@@ -72,11 +72,7 @@ namespace Model
         // 변경사항 오브젝트 생성
         public void MakeStatusModel(Status status)
         {
-            StatusModel newStatus = null;
-
-            Debug.Log("1. " + status.GetXstatus() + " 2. " + status.GetYstatus() + "3. " + status.GetPath());
-
-            newStatus = ClassifiedStatusModel(status.GetYstatus());
+            StatusModel newStatus = ClassifiedStatusModel(status.GetYstatus());
 
             if (newStatus != null)
                 newStatus.SetInformation(status.GetPath());

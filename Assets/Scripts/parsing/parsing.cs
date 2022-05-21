@@ -82,6 +82,8 @@ public class parsing {
         while(true)
         {
             theLine = strReader.ReadLine();
+            Debug.Log("LINE: " + theLine);
+
             if(theLine == null)
                 break;
 
