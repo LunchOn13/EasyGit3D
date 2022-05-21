@@ -19,7 +19,7 @@ public class CMDworker : MonoBehaviour
 
         //engine.ReadOutput();
     }
-
+   
     /// <summary>
     /// 많은 개선이 필요할 것으로 보임
     /// </summary>
@@ -29,7 +29,7 @@ public class CMDworker : MonoBehaviour
         engine.WriteInput(s);
     }
 
-    public void output()
+    public static void output()
     {
         //UnityEngine.Debug.Log("output");
         if(engine.output.IsReadable())
@@ -37,7 +37,6 @@ public class CMDworker : MonoBehaviour
             UnityEngine.Debug.Log("lineofoutput " + engine.output.LineofOutput());
             InputManager.OutputControl(engine.output.OutputLines());
         }
-
 
         if(engine.error.IsReadable() && isReading == false)
         {
@@ -48,7 +47,6 @@ public class CMDworker : MonoBehaviour
             engine.error.ErrorCheck();
             isReading = false;
         }
-
     }
 
     public static void startParseLog()
@@ -66,7 +64,7 @@ public class CMDworker : MonoBehaviour
         pa.parseLog(engine.output.OutputLines());
     }
 
-    public void startParseStatus()
+    public static void startParseStatus()
     {
         string specialInput = "git status --porcelain=v1";
         //UnityEngine.Debug.Log(specialInput);

@@ -47,4 +47,11 @@ namespace Model
         public string date;
         public string type;
     }
+
+
+    // 변경사항 종류
+    public enum StatusCategory
+    {
+        Added, Modified, Deleted, Untracked
+    }
 }

@@ -76,7 +76,7 @@ public class IslandEngine
         bashInfo.CreateNoWindow = true;
 
         // 테스트용 경로임 삭제할 것
-        bashInfo.WorkingDirectory = "F:\\Swimming_on_git";
+        bashInfo.WorkingDirectory = "D:\\UnityProject\\Capstone\\Swimming_on_git";
 
         bashInfo.RedirectStandardOutput = true;
         bashInfo.RedirectStandardInput = true;

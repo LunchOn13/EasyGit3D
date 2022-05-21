@@ -11,15 +11,40 @@ namespace Model
     /// </summary>
     public class Message : MonoBehaviour
     {
-        [SerializeField] Text message;
+        private static Message instance;
+        public static Message Instance
+        {
+            get
+            {
+                if (null == instance)
+                    return null;
+
+                return instance;
+            }
+        }
+
+        private Text message;
+
         [SerializeField] float distance;
+
+        private void Awake()
+        {
+            if(null == instance)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {
+            message = GetComponent<Text>();
             message.text = "";
         }
 
-        // 커밋 메시지에 따라 텍스트 크기 및 위치 설정
         public void SetMessage(string text, Vector3 position)
         {
             // 텍스트 크기 설정

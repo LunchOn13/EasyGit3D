@@ -48,10 +48,13 @@ public class Output
     /// <returns></returns>
     public string OutputLines()
     {
-        this.isOutput = false;
-        string s = this.output.ToString();
-        // $, \n 지우기
-        return s.Remove(s.Length - 4);
+        isOutput = false;
+
+        string s = output.ToString();
+        if (s.Length >= 4)
+            s = s.Remove(s.Length - 4);
+        
+        return s;
     }
 
     /// <summary>
