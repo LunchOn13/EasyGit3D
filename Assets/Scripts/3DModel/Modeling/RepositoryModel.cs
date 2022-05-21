@@ -152,8 +152,6 @@ namespace Model
             MadeBranch(main).transform.position = master.position;
             LocateAllBranch();
 
-            Debug.Log("Checkout: " + checkout);
-
             // 카메라 현재 체크아웃 브랜치에 고정
             Camera.main.transform.position = cameras[checkout].position;
             Camera.main.transform.rotation = cameras[checkout].rotation;
