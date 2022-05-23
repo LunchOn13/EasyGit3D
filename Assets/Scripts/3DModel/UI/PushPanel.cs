@@ -24,8 +24,6 @@ namespace Model
             while (!CMDworker.engine.output.IsReadable())
                 yield return null;
 
-            Debug.Log("PUSH");
-
             GitFunction.Push();
             gameObject.SetActive(false);
         }

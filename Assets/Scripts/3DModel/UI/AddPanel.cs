@@ -62,11 +62,13 @@ namespace Model
 
         public void AddStageFile(StatusModel statusModel)
         {
-            GameObject newStageFile = Instantiate(statusFile);
-            newStageFile.transform.parent = stageList.transform;
-            newStageFile.GetComponent<StatusFile>().SetPathText(statusModel.GetPath());
-
-            StageManager.AddStatusModel(statusModel);
+            // 이미 스테이지에 올라가있는지 확인
+            if(StageManager.AddStatusModel(statusModel))
+            {
+                GameObject newStageFile = Instantiate(statusFile);
+                newStageFile.transform.parent = stageList.transform;
+                newStageFile.GetComponent<StatusFile>().SetPathText(statusModel.GetPath());
+            }
         }
 
         // 스테이지에 파일 추가
@@ -75,7 +77,6 @@ namespace Model
             AddStageFile(statusModelDictionary[path]);
             GitFunction.AddFile(path);
             statusModelDictionary[path].HighlightModel();
-
             HidePanel();
         }
 

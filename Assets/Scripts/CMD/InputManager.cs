@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
             ConductInput();
-
+    
         if (isUpdateScroll)
         {
             UpdateScroll();

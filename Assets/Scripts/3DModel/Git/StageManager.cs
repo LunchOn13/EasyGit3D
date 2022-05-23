@@ -52,9 +52,14 @@ namespace Model
             return stageModelDictionary.ContainsKey(path);
         }
 
-        public static void AddStatusModel(StatusModel statusModel)
+        public static bool AddStatusModel(StatusModel statusModel)
         {
-            stageModelDictionary[statusModel.GetPath()] = statusModel;
+            if (!stageModelDictionary.ContainsKey(statusModel.GetPath()))
+            {
+                stageModelDictionary[statusModel.GetPath()] = statusModel;
+                return true;
+            }
+            else return false;
         }
 
         public static void DeleteStatusModel(string path)
