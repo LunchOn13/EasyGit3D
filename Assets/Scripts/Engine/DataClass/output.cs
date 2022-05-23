@@ -37,8 +37,6 @@ public class Output
     {
         this.isOutput = false;
         this.output.AppendLine(s);
-        if (s == "$")
-            this.isOutput = true;
         this.lineCount++;
     }
 
@@ -50,11 +48,7 @@ public class Output
     {
         isOutput = false;
 
-        string s = output.ToString();
-        if (s.Length >= 4)
-            s = s.Remove(s.Length - 4);
-        
-        return s;
+        return output.ToString();
     }
 
     /// <summary>
@@ -64,7 +58,7 @@ public class Output
     {
         this.output.Clear();
         this.lineCount = 0;
-        this.isOutput = false;
+        UnsetIsOutput();
     }
    
     public void setIsOutput()
