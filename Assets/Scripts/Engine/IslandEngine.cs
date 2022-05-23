@@ -76,7 +76,7 @@ public class IslandEngine
         bashInfo.CreateNoWindow = true;
 
         // 테스트용 경로임 삭제할 것
-        bashInfo.WorkingDirectory = "F:\\Swimming_on_git";
+        bashInfo.WorkingDirectory = "D:\\UnityProject\\Capstone\\Swimming_on_git";
 
         bashInfo.RedirectStandardOutput = true;
         bashInfo.RedirectStandardInput = true;
@@ -119,9 +119,9 @@ public class IslandEngine
         inputCommand = input;
         writer.WriteLine(input);
         writer.Flush();
-        
+
         // 항상 종료 시점에 제대로 끝났는지 확인하기 위한 용도
-        writer.WriteLine("echo \\$EOF");
+        writer.WriteLine("echo EOF");
         writer.Flush();
     }
 
@@ -160,7 +160,7 @@ To github.com:LunchOn13/Swimming_on_git.git
         if (!String.IsNullOrEmpty(outLine.Data))
         {
             //UnityEngine.Debug.Log(outLine.Data);
-            if (outLine.Data == "\\$EOF")
+            if (outLine.Data == "EOF")
             {
                 UnityEngine.Debug.Log("set isReadable !!!");
                 output.setIsOutput();

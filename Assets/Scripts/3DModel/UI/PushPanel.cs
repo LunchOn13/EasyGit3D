@@ -21,12 +21,13 @@ namespace Model
         private IEnumerator CommitAndPush()
         {
             GitFunction.Commit(commit.text);
-            yield return new WaitUntil(() => CMDworker.engine.output.IsReadable() == true);
+            while (!CMDworker.engine.output.IsReadable())
+                yield return null;
 
             Debug.Log("PUSH");
 
             GitFunction.Push();
-            yield return null;
+            gameObject.SetActive(false);
         }
     }
 }
