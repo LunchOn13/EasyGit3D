@@ -33,7 +33,6 @@ public class parsing {
         s = s.Insert(s.Length, "]");
 
         JArray json = JArray.Parse(s);
-        File.WriteAllText(@"D:\test.json", json.ToString());
 
         string nowRef = "";
         foreach (var cont in json)
