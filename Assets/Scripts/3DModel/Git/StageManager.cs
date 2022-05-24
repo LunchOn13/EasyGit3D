@@ -30,6 +30,16 @@ namespace Model
                 pushPanel.SetActive(true);
         }
 
+        public void ClearStageList()
+        {
+            stageModelDictionary.Clear();
+
+            // 스테이지 패널 리스트 초기화
+            Transform[] childList = stageList.GetComponentsInChildren<Transform>();
+            for (int i = 1; i < childList.Length; i++)
+                Destroy(childList[i].gameObject);
+        }
+
         public void DeleteAllStageModels()
         {
             if (stageList.childCount == 0)

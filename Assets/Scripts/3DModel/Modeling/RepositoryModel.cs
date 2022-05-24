@@ -38,6 +38,7 @@ namespace Model
 
         [SerializeField] GameObject checkoutButton;
         [SerializeField] Text checkoutText;
+
         [SerializeField] GameObject stagePanel;
 
         private Dictionary<string, commit> commitDictionary;
@@ -73,6 +74,7 @@ namespace Model
 
         public void RefreshViewModels()
         {
+            stagePanel.GetComponent<StageManager>().ClearStageList();
             ClearAllModels();
             GetStatusData();
             GetRepositoryData();
@@ -216,6 +218,7 @@ namespace Model
 
             newBranch.LoadCheckout(checkoutButton);
             newBranch.LoadStage(stagePanel);
+
             newBranch.SaveOriginalMaterial();
             newBranch.SetRepository(this);
 
