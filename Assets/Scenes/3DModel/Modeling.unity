@@ -1545,8 +1545,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 821778614}
-        m_MethodName: Checkout
+      - m_Target: {fileID: 821778609}
+        m_MethodName: CheckoutBranch
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4794,6 +4794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   commit: {fileID: 559723580}
+  repository: {fileID: 821778609}
 --- !u!114 &1390094709
 MonoBehaviour:
   m_ObjectHideFlags: 0

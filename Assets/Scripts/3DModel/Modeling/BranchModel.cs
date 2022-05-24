@@ -45,15 +45,11 @@ namespace Model
 
         // Y축 간격
         [SerializeField] float distance;
-
-        // 브랜치 이름
         [SerializeField] TextMeshPro title;
 
-        // 체크아웃 버튼
         private GameObject checkout;
-
-        // 스테이지 패널
         private GameObject stage;
+        private RepositoryModel repository;
 
         private void Start()
         {
@@ -63,6 +59,11 @@ namespace Model
             untrackedCount = 0;
             
             count = 0;
+        }
+
+        public void SetRepository(RepositoryModel _repository)
+        {
+            repository = _repository;
         }
 
         public void SaveOriginalMaterial()
@@ -223,6 +224,10 @@ namespace Model
             }
 
             GitFunction.Merge(mergeStartBranch);
+            while (!CMDworker.engine.output.IsReadable())
+                yield return null;
+
+            repository.RefreshViewModels();
             gameObject.SetActive(false);
         }
 

@@ -42,6 +42,11 @@ namespace Model
             dragObject.SetActive(false);
         }
 
+        public GameObject GetDragObject()
+        {
+            return dragObject;
+        }
+
         // 브랜치와 같은 지평선의 좌표
         private Vector3 RatioApplied(Vector3 point)
         {

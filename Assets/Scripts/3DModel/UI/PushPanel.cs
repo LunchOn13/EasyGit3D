@@ -12,6 +12,7 @@ namespace Model
     public class PushPanel : MonoBehaviour
     {
         [SerializeField] Text commit;
+        [SerializeField] RepositoryModel repository;
 
         public void CommitAndPushFiles()
         {
@@ -25,6 +26,10 @@ namespace Model
                 yield return null;
 
             GitFunction.Push();
+            while (!CMDworker.engine.output.IsReadable())
+                yield return null;
+
+            repository.RefreshViewModels();
             gameObject.SetActive(false);
         }
     }

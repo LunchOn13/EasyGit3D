@@ -29,6 +29,8 @@ public class parsing {
         // git log 명령어로 string json 형식으로 아예 받아온다
         //  [] 붙인다
 
+        branches.Clear();
+
         s = s.Insert(0, "[");
         s = s.Insert(s.Length, "]");
 

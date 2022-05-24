@@ -36,18 +36,13 @@ namespace Model
 
         private List<BranchData> develop;
 
-        // 체크아웃 버튼
         [SerializeField] GameObject checkoutButton;
-
-        // 체크아웃 텍스트
         [SerializeField] Text checkoutText;
-
-        // 스테이지 패널
         [SerializeField] GameObject stagePanel;
 
-        // 레포지토리 데이터
         private Dictionary<string, commit> commitDictionary;
         private RepositoryData repositoryData;
+        private List<GameObject> allModelList;
 
         // 스테이터스 데이터
         private List<Status> statusList;
@@ -57,6 +52,37 @@ namespace Model
             develop = new List<BranchData>();
             cameras = new ConcurrentDictionary<string, Transform>();
             repositoryData = new RepositoryData();
+            allModelList = new List<GameObject>();
+        }
+
+        public void CheckoutBranch()
+        {
+            // 변경사항 있으면 체크아웃 불가
+            if (statusList.Count > 0) return;
+
+            StartCoroutine(Checkout());
+        }
+
+        public IEnumerator Checkout()
+        {
+            GitFunction.Checkout(focus);
+            while (!CMDworker.engine.output.IsReadable())
+                yield return null;
+            RefreshViewModels();
+        }
+
+        public void RefreshViewModels()
+        {
+            ClearAllModels();
+            GetStatusData();
+            GetRepositoryData();
+        }
+
+        public void ClearAllModels()
+        {
+            for (int i = 0; i < allModelList.Count; i++)
+                Destroy(allModelList[i]);
+            allModelList.Clear();
         }
 
         // 레포지토리 데이터 불러옴
@@ -146,6 +172,8 @@ namespace Model
             checkout = repositoryData.checkout;
             checkoutText.text = checkout;
 
+            develop.Clear();
+
             // 브랜치 분류
             foreach (BranchData branch in repositoryData.branches)
             {
@@ -167,7 +195,6 @@ namespace Model
             Camera.main.transform.rotation = cameras[checkout].rotation;
         }
 
-            // 카메라 현재 체크아웃 브랜치에 고정
         // 브랜치 개별 모델링
         public GameObject MadeBranch(BranchData data)
         {
@@ -190,12 +217,16 @@ namespace Model
             newBranch.LoadCheckout(checkoutButton);
             newBranch.LoadStage(stagePanel);
             newBranch.SaveOriginalMaterial();
+            newBranch.SetRepository(this);
 
             // 드래그 적용
             newObject.GetComponent<DragBranch>().Initialize();
 
             // 카메라 위치 적용
             cameras[data.title] = newBranch.cameraTransform;
+
+            allModelList.Add(newObject);
+            allModelList.Add(newObject.GetComponent<DragBranch>().GetDragObject());
 
             return newObject;
         }
@@ -210,6 +241,8 @@ namespace Model
 
                 newObject.transform.position = master.position;
                 newObject.transform.Rotate(0f, -angle * i, 0f);
+
+                allModelList.Add(newObject);
 
                 // 브랜치 생성
                 GameObject newBranch = MadeBranch(develop[i - 1]);
