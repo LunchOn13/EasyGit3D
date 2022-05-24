@@ -40,6 +40,7 @@ namespace Model
         [SerializeField] Text checkoutText;
 
         [SerializeField] GameObject stagePanel;
+        [SerializeField] GameObject pullPanel;
 
         private Dictionary<string, commit> commitDictionary;
         private RepositoryData repositoryData;
@@ -72,9 +73,21 @@ namespace Model
             RefreshViewModels();
         }
 
+        public void CheckPull()
+        {
+            GetStatusData();
+
+            // Pull할 사항이 존재
+            if (CMDworker.pa.GetBranchAB_m() != 0)
+                pullPanel.SetActive(true);
+            else
+                GetRepositoryData();
+        }
+
         public void RefreshViewModels()
         {
             stagePanel.GetComponent<StageManager>().ClearStageList();
+
             ClearAllModels();
             GetStatusData();
             GetRepositoryData();

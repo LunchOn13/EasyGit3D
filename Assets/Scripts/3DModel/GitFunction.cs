@@ -28,6 +28,14 @@ namespace Model
             CMDworker.input("git checkout " + RepositoryModel.focus);
         }
 
+        public void Pull()
+        {
+            InputManager.OutputControl("git pull" + "\n");
+            CMDworker.input("git pull");
+            while(!CMDworker.engine.output.IsReadable())
+            { }
+        }
+
         public static void Checkout(string branch)
         {
             InputManager.OutputControl("git checkout " + branch + "\n");
