@@ -68,6 +68,7 @@ namespace Model
             repositoryData.branches = new List<BranchData>();
 
             string branchName = "";
+            bool meetMain = false;
             BranchData currentBranch = null;
 
             foreach (string key in commitDictionary.Keys)
@@ -106,11 +107,21 @@ namespace Model
 
                         currentBranch = new BranchData(branchName);
 
-                        // MAIN이 마지막이라고 가정해야 할 수 있음..
-                        if (branchName == "main")
+                        if (meetMain && checkout)
                         {
                             repositoryData.branches.Add(currentBranch);
                             break;
+                        }
+
+                        // MAIN이 마지막이라고 가정해야 할 수 있음..
+                        if (branchName == "main")
+                        {
+                            meetMain = true;
+                            if (repositoryData.checkout != null)
+                            {
+                                repositoryData.branches.Add(currentBranch);
+                                break;
+                            }
                         }
                     }
                 }
@@ -152,11 +163,11 @@ namespace Model
             MadeBranch(main).transform.position = master.position;
             LocateAllBranch();
 
-            // 카메라 현재 체크아웃 브랜치에 고정
             Camera.main.transform.position = cameras[checkout].position;
             Camera.main.transform.rotation = cameras[checkout].rotation;
         }
 
+            // 카메라 현재 체크아웃 브랜치에 고정
         // 브랜치 개별 모델링
         public GameObject MadeBranch(BranchData data)
         {
@@ -176,11 +187,9 @@ namespace Model
                     newBranch.MakeStatusModel(statusList[i]);
             }
 
-            // 체크아웃 버튼 참조
             newBranch.LoadCheckout(checkoutButton);
-
-            // 스테이지 패널 참조
             newBranch.LoadStage(stagePanel);
+            newBranch.SaveOriginalMaterial();
 
             // 드래그 적용
             newObject.GetComponent<DragBranch>().Initialize();

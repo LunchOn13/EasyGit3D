@@ -28,6 +28,12 @@ namespace Model
             CMDworker.input("git checkout " + RepositoryModel.focus);
         }
 
+        public static void Checkout(string branch)
+        {
+            InputManager.OutputControl("git checkout " + branch + "\n");
+            CMDworker.input("git checkout " + branch);
+        }
+
         public static void AddFile(string path)
         {
             InputManager.OutputControl("git add " + path + "\n");
@@ -62,6 +68,12 @@ namespace Model
         {
             InputManager.OutputControl("git push" + "\n");
             CMDworker.input("git push");
+        }
+
+        public static void Merge(string start)
+        {
+            InputManager.OutputControl("git merge " + start + "\n");
+            CMDworker.input("git merge " + start);
         }
     }
 }

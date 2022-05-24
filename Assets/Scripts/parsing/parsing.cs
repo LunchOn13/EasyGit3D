@@ -33,6 +33,7 @@ public class parsing {
         s = s.Insert(s.Length, "]");
 
         JArray json = JArray.Parse(s);
+        File.WriteAllText("D://DATA.json", json.ToString());
 
         string nowRef = "";
         foreach (var cont in json)
@@ -55,10 +56,7 @@ public class parsing {
 
             branches.Add(cont["CommitHash"].ToString(), tmpCommit);
         }
-        
     }
-
-
 
     public List<Status> GetStatusList()
     {
@@ -85,8 +83,6 @@ public class parsing {
         while(true)
         {
             theLine = strReader.ReadLine();
-            Debug.Log("LINE: " + theLine);
-
             if(theLine == null)
                 break;
 
