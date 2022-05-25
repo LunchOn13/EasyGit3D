@@ -75,6 +75,8 @@ namespace Model
 
         public void CheckPull()
         {
+            if (!PathManager.openRepositoryPossible) return;
+            
             GetStatusData();
 
             // Pull할 사항이 존재
@@ -82,6 +84,12 @@ namespace Model
                 pullPanel.SetActive(true);
             else
                 GetRepositoryData();
+        }
+
+        public void StartGitProcess()
+        {
+            if (!PathManager.openRepositoryPossible) return;
+            CMDworker.engine.StartEngine();
         }
 
         public void RefreshViewModels()

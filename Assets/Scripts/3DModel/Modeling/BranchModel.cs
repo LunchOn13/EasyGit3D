@@ -249,7 +249,6 @@ namespace Model
                 if (targetBranch.GetTitle() != GetTitle())
                 {
                     mergePossible = true;
-                    Debug.Log("MERGE POSSIBLE");
                     targetBranch.ApplyMergeEndMaterial();
 
                     mergeStartBranch = GetTitle();

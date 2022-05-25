@@ -75,8 +75,7 @@ public class IslandEngine
         bashInfo.UseShellExecute = false;
         bashInfo.CreateNoWindow = true;
 
-        // 테스트용 경로임 삭제할 것
-        bashInfo.WorkingDirectory = "D:\\UnityProject\\Capstone\\Swimming_on_git";
+        bashInfo.WorkingDirectory = PathManager.repositoryPath;
 
         bashInfo.RedirectStandardOutput = true;
         bashInfo.RedirectStandardInput = true;
@@ -104,6 +103,10 @@ public class IslandEngine
         UnityEngine.Debug.Log("start error read line");
 
         WriteInput("pwd");
+        while (!output.IsReadable())
+        {
+
+        }
     }
 
 

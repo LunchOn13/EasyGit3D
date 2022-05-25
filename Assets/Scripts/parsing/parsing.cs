@@ -73,7 +73,6 @@ public class parsing {
      */
     public void parseStatus(string s)
     {
-        UnityEngine.Debug.Log("start parse Status");
         StatusList.Clear();
 
         // 임시 방편
@@ -85,7 +84,7 @@ public class parsing {
         while(true)
         {
             theLine = strReader.ReadLine();
-            if(theLine == null)
+            if (theLine == null)
                 break;
 
             Status tmp = new Status(theLine[0], theLine[1], theLine.Substring(2));
@@ -131,6 +130,7 @@ public class parsing {
             theLine = strReader.ReadLine();
             if (theLine == null || count > 4)
                 break;
+
             count++;
             string[] tmp = theLine.Split(' ');
 
@@ -151,6 +151,5 @@ public class parsing {
                     break;
             }
         }
-
     }
 }
