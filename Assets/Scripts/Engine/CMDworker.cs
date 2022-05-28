@@ -11,14 +11,6 @@ public class CMDworker : MonoBehaviour
     // test를 위해 넣은 임시 변수
     // 삭제하고 error, output class 에 is reading 변수를 넣어야함
     private static bool isReading = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        engine.StartEngine();
-
-        //engine.ReadOutput();
-    }
    
     /// <summary>
     /// 많은 개선이 필요할 것으로 보임

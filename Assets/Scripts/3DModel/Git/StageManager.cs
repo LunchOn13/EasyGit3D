@@ -30,6 +30,16 @@ namespace Model
                 pushPanel.SetActive(true);
         }
 
+        public void ClearStageList()
+        {
+            stageModelDictionary.Clear();
+
+            // 스테이지 패널 리스트 초기화
+            Transform[] childList = stageList.GetComponentsInChildren<Transform>();
+            for (int i = 1; i < childList.Length; i++)
+                Destroy(childList[i].gameObject);
+        }
+
         public void DeleteAllStageModels()
         {
             if (stageList.childCount == 0)
@@ -52,9 +62,14 @@ namespace Model
             return stageModelDictionary.ContainsKey(path);
         }
 
-        public static void AddStatusModel(StatusModel statusModel)
+        public static bool AddStatusModel(StatusModel statusModel)
         {
-            stageModelDictionary[statusModel.GetPath()] = statusModel;
+            if (!stageModelDictionary.ContainsKey(statusModel.GetPath()))
+            {
+                stageModelDictionary[statusModel.GetPath()] = statusModel;
+                return true;
+            }
+            else return false;
         }
 
         public static void DeleteStatusModel(string path)

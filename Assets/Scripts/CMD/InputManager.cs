@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] Text input;            // 입력할 텍스트
+    [SerializeField] InputField input;      // 입력할 텍스트
     [SerializeField] Text output;           // 출력할 텍스트
     [SerializeField] ScrollRect scroll;     // 출력 스크롤
 
@@ -38,9 +38,11 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
+        {
             ConductInput();
-        CMDworker.output();
-
+            input.text = "";
+        }
+    
         if (isUpdateScroll)
         {
             UpdateScroll();

@@ -28,6 +28,20 @@ namespace Model
             CMDworker.input("git checkout " + RepositoryModel.focus);
         }
 
+        public void Pull()
+        {
+            InputManager.OutputControl("git pull" + "\n");
+            CMDworker.input("git pull");
+            while(!CMDworker.engine.output.IsReadable())
+            { }
+        }
+
+        public static void Checkout(string branch)
+        {
+            InputManager.OutputControl("git checkout " + branch + "\n");
+            CMDworker.input("git checkout " + branch);
+        }
+
         public static void AddFile(string path)
         {
             InputManager.OutputControl("git add " + path + "\n");
@@ -62,6 +76,28 @@ namespace Model
         {
             InputManager.OutputControl("git push" + "\n");
             CMDworker.input("git push");
+        }
+
+        public static void Merge(string start)
+        {
+            InputManager.OutputControl("git merge " + start + "\n");
+            CMDworker.input("git merge " + start);
+        }
+
+        public static void TutorialCommit()
+        {
+            InputManager.OutputControl("git commit -m \"First commit\" --allow-empty\n");
+            CMDworker.input("git commit -m \"First commit\" --allow-empty");
+            while (!CMDworker.engine.output.IsReadable())
+            { }
+        }
+
+        public void MakeSampleFile()
+        {
+            InputManager.OutputControl("touch sample.txt\n");
+            CMDworker.input("touch sample.txt");
+            while (!CMDworker.engine.output.IsReadable())
+            { }
         }
     }
 }

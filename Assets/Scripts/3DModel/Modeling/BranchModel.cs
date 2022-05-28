@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -33,17 +34,22 @@ namespace Model
         // 커밋 개수
         private int count;
 
+        [SerializeField] Material mergeStart;
+        [SerializeField] Material mergeEnd;
+
+        private ConcurrentDictionary<MeshRenderer, Material> originalMaterial;
+
+        private bool isDragObject = false;
+        private bool mergePossible = false;
+        private string mergeStartBranch, mergeEndBranch;
+
         // Y축 간격
         [SerializeField] float distance;
-
-        // 브랜치 이름
         [SerializeField] TextMeshPro title;
 
-        // 체크아웃 버튼
         private GameObject checkout;
-
-        // 스테이지 패널
         private GameObject stage;
+        private RepositoryModel repository;
 
         private void Start()
         {
@@ -53,6 +59,56 @@ namespace Model
             untrackedCount = 0;
             
             count = 0;
+        }
+
+        public void SetRepository(RepositoryModel _repository)
+        {
+            repository = _repository;
+        }
+
+        public void SaveOriginalMaterial()
+        {
+            if (isDragObject) return;
+
+            originalMaterial = new ConcurrentDictionary<MeshRenderer, Material>();
+
+            foreach (MeshRenderer renderer in GetComponentsInChildren<MeshRenderer>())
+                originalMaterial[renderer] = renderer.material;
+        }
+
+        public void LoadOriginalMaterial()
+        {
+            if (isDragObject) return;
+
+            foreach (MeshRenderer renderer in GetComponentsInChildren<MeshRenderer>())
+                renderer.material = originalMaterial[renderer];
+        }
+
+        public void ApplyMergeStartMaterial()
+        {
+            if (isDragObject) return;
+
+            foreach (MeshRenderer renderer in GetComponentsInChildren<MeshRenderer>())
+            {
+                if(renderer.gameObject.GetComponent<TextMeshPro>() == null)
+                    renderer.material = mergeStart;
+            }
+        }
+
+        public void ApplyMergeEndMaterial()
+        {
+            if (isDragObject) return;
+
+            foreach (MeshRenderer renderer in GetComponentsInChildren<MeshRenderer>())
+            {
+                if (renderer.gameObject.GetComponent<TextMeshPro>() == null)
+                    renderer.material = mergeEnd;
+            }
+        }
+
+        public void SetIsDragObject(bool flag)
+        {
+            isDragObject = flag;
         }
 
         // 커밋 오브젝트 생성
@@ -145,6 +201,36 @@ namespace Model
             title.text = _title;
         }
 
+        public string GetTitle()
+        {
+            return title.text;
+        }
+
+        public bool TryMerge()
+        {
+            if (!mergePossible) return false;
+            
+            StartCoroutine(MergeBranch());
+            return true;
+        }
+
+        public IEnumerator MergeBranch()
+        {
+            if(mergeEndBranch != RepositoryModel.checkout)
+            {
+                GitFunction.Checkout(mergeEndBranch);
+                while (!CMDworker.engine.output.IsReadable())
+                    yield return null;
+            }
+
+            GitFunction.Merge(mergeStartBranch);
+            while (!CMDworker.engine.output.IsReadable())
+                yield return null;
+
+            repository.RefreshViewModels();
+            gameObject.SetActive(false);
+        }
+
         private void OnMouseDown()
         {
             CameraMove.SetTarget(cameraTransform);
@@ -153,6 +239,35 @@ namespace Model
             // 작업 브랜치인지에 따라 체크아웃 버튼, 스테이지 관리창 설정
             checkout.SetActive(title.text != RepositoryModel.checkout);
             stage.SetActive(title.text == RepositoryModel.checkout);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Branch")
+            {
+                BranchModel targetBranch = other.GetComponent<BranchModel>();
+                if (targetBranch.GetTitle() != GetTitle())
+                {
+                    mergePossible = true;
+                    targetBranch.ApplyMergeEndMaterial();
+
+                    mergeStartBranch = GetTitle();
+                    mergeEndBranch = targetBranch.GetTitle();
+                }
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.tag == "Branch")
+            {
+                BranchModel targetBranch = other.GetComponent<BranchModel>();
+                if (targetBranch.GetTitle() != GetTitle())
+                {
+                    mergePossible = false;
+                    targetBranch.LoadOriginalMaterial();
+                }
+            }
         }
     }
 }

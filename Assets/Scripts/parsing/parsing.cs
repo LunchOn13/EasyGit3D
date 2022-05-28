@@ -29,10 +29,13 @@ public class parsing {
         // git log 명령어로 string json 형식으로 아예 받아온다
         //  [] 붙인다
 
+        branches.Clear();
+
         s = s.Insert(0, "[");
         s = s.Insert(s.Length, "]");
 
         JArray json = JArray.Parse(s);
+        File.WriteAllText("D://DATA.json", json.ToString());
 
         string nowRef = "";
         foreach (var cont in json)
@@ -55,10 +58,7 @@ public class parsing {
 
             branches.Add(cont["CommitHash"].ToString(), tmpCommit);
         }
-        
     }
-
-
 
     public List<Status> GetStatusList()
     {
@@ -73,17 +73,18 @@ public class parsing {
      */
     public void parseStatus(string s)
     {
-        UnityEngine.Debug.Log("start parse Status");
         StatusList.Clear();
+
+        // 임시 방편
+        if (s == "$")
+            return;
 
         StringReader strReader = new StringReader(s);
         string theLine = null;
         while(true)
         {
             theLine = strReader.ReadLine();
-            Debug.Log("LINE: " + theLine);
-
-            if(theLine == null)
+            if (theLine == null)
                 break;
 
             Status tmp = new Status(theLine[0], theLine[1], theLine.Substring(2));
@@ -129,6 +130,7 @@ public class parsing {
             theLine = strReader.ReadLine();
             if (theLine == null || count > 4)
                 break;
+
             count++;
             string[] tmp = theLine.Split(' ');
 
@@ -149,6 +151,5 @@ public class parsing {
                     break;
             }
         }
-
     }
 }

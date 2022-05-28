@@ -7,7 +7,7 @@ namespace Model
     // 모델링에 필요한 레포지토리 데이터
     public class RepositoryData
     {
-        public string checkout;
+        public string checkout = null;
         public List<BranchData> branches;
     }
 

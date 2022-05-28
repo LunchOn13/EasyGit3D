@@ -5,7 +5,7 @@ public class Output
 {
     private StringBuilder output;
 
-    private Boolean isOutput = false;
+    private bool isOutput = false;
     private int lineCount = 0;
 
     public Output()
@@ -19,7 +19,7 @@ public class Output
     /// output이 존재하는지 확인한다.
     /// </summary>
     /// <returns></returns>
-    public Boolean IsReadable()
+    public bool IsReadable()
     {
         return this.isOutput;
     }

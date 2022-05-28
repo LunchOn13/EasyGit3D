@@ -36,18 +36,15 @@ namespace Model
 
         private List<BranchData> develop;
 
-        // 체크아웃 버튼
         [SerializeField] GameObject checkoutButton;
-
-        // 체크아웃 텍스트
         [SerializeField] Text checkoutText;
 
-        // 스테이지 패널
         [SerializeField] GameObject stagePanel;
+        [SerializeField] GameObject pullPanel;
 
-        // 레포지토리 데이터
         private Dictionary<string, commit> commitDictionary;
         private RepositoryData repositoryData;
+        private List<GameObject> allModelList;
 
         // 스테이터스 데이터
         private List<Status> statusList;
@@ -57,6 +54,58 @@ namespace Model
             develop = new List<BranchData>();
             cameras = new ConcurrentDictionary<string, Transform>();
             repositoryData = new RepositoryData();
+            allModelList = new List<GameObject>();
+        }
+
+        public void CheckoutBranch()
+        {
+            // 변경사항 있으면 체크아웃 불가
+            if (statusList.Count > 0) return;
+
+            StartCoroutine(Checkout());
+        }
+
+        public IEnumerator Checkout()
+        {
+            GitFunction.Checkout(focus);
+            while (!CMDworker.engine.output.IsReadable())
+                yield return null;
+            RefreshViewModels();
+        }
+
+        public void CheckPull()
+        {
+            if (!PathManager.openRepositoryPossible) return;
+            
+            GetStatusData();
+
+            // Pull할 사항이 존재
+            if (CMDworker.pa.GetBranchAB_m() != 0)
+                pullPanel.SetActive(true);
+            else
+                GetRepositoryData();
+        }
+
+        public void StartGitProcess()
+        {
+            if (!PathManager.openRepositoryPossible) return;
+            CMDworker.engine.StartEngine();
+        }
+
+        public void RefreshViewModels()
+        {
+            stagePanel.GetComponent<StageManager>().ClearStageList();
+
+            ClearAllModels();
+            GetStatusData();
+            GetRepositoryData();
+        }
+
+        public void ClearAllModels()
+        {
+            for (int i = 0; i < allModelList.Count; i++)
+                Destroy(allModelList[i]);
+            allModelList.Clear();
         }
 
         // 레포지토리 데이터 불러옴
@@ -68,6 +117,7 @@ namespace Model
             repositoryData.branches = new List<BranchData>();
 
             string branchName = "";
+            bool meetMain = false;
             BranchData currentBranch = null;
 
             foreach (string key in commitDictionary.Keys)
@@ -106,11 +156,21 @@ namespace Model
 
                         currentBranch = new BranchData(branchName);
 
-                        // MAIN이 마지막이라고 가정해야 할 수 있음..
-                        if (branchName == "main")
+                        if (meetMain && checkout)
                         {
                             repositoryData.branches.Add(currentBranch);
                             break;
+                        }
+
+                        // MAIN이 마지막이라고 가정해야 할 수 있음..
+                        if (branchName == "main" || branchName == "master")
+                        {
+                            meetMain = true;
+                            if (repositoryData.checkout != null)
+                            {
+                                repositoryData.branches.Add(currentBranch);
+                                break;
+                            }
                         }
                     }
                 }
@@ -135,11 +195,13 @@ namespace Model
             checkout = repositoryData.checkout;
             checkoutText.text = checkout;
 
+            develop.Clear();
+
             // 브랜치 분류
             foreach (BranchData branch in repositoryData.branches)
             {
                 // 메인 브랜치
-                if (branch.title == "main")
+                if (branch.title == "main" || branch.title == "master")
                     main = branch;
                 // 기타 브랜치
                 else
@@ -152,9 +214,6 @@ namespace Model
             MadeBranch(main).transform.position = master.position;
             LocateAllBranch();
 
-            Debug.Log("Checkout: " + checkout);
-
-            // 카메라 현재 체크아웃 브랜치에 고정
             Camera.main.transform.position = cameras[checkout].position;
             Camera.main.transform.rotation = cameras[checkout].rotation;
         }
@@ -178,17 +237,20 @@ namespace Model
                     newBranch.MakeStatusModel(statusList[i]);
             }
 
-            // 체크아웃 버튼 참조
             newBranch.LoadCheckout(checkoutButton);
-
-            // 스테이지 패널 참조
             newBranch.LoadStage(stagePanel);
+
+            newBranch.SaveOriginalMaterial();
+            newBranch.SetRepository(this);
 
             // 드래그 적용
             newObject.GetComponent<DragBranch>().Initialize();
 
             // 카메라 위치 적용
             cameras[data.title] = newBranch.cameraTransform;
+
+            allModelList.Add(newObject);
+            allModelList.Add(newObject.GetComponent<DragBranch>().GetDragObject());
 
             return newObject;
         }
@@ -203,6 +265,8 @@ namespace Model
 
                 newObject.transform.position = master.position;
                 newObject.transform.Rotate(0f, -angle * i, 0f);
+
+                allModelList.Add(newObject);
 
                 // 브랜치 생성
                 GameObject newBranch = MadeBranch(develop[i - 1]);
