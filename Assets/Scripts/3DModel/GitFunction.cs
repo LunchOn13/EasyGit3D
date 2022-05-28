@@ -84,6 +84,20 @@ namespace Model
             CMDworker.input("git merge " + start);
         }
 
+        public static void MakeBranch(string newBranch)
+        {
+            InputManager.OutputControl("git branch " + newBranch + "\n");
+            CMDworker.input("git branch " + newBranch);
+            while (!CMDworker.engine.output.IsReadable())
+            { }
+
+            Checkout(newBranch);
+            while (!CMDworker.engine.output.IsReadable())
+            { }
+
+            TutorialCommit();
+        }
+
         public static void TutorialCommit()
         {
             InputManager.OutputControl("git commit -m \"First commit\" --allow-empty\n");

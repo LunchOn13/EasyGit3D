@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Model
 {
@@ -107,7 +108,7 @@ namespace Model
 
         private void OnMouseDown()
         {
-            if(!StageManager.CheckStatusModel(path))
+            if (!StageManager.CheckStatusModel(path))
                 addPanel.ShowPanel(Input.mousePosition, path);
         }
 
