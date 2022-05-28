@@ -163,7 +163,7 @@ namespace Model
                         }
 
                         // MAIN이 마지막이라고 가정해야 할 수 있음..
-                        if (branchName == "main")
+                        if (branchName == "main" || branchName == "master")
                         {
                             meetMain = true;
                             if (repositoryData.checkout != null)
@@ -201,7 +201,7 @@ namespace Model
             foreach (BranchData branch in repositoryData.branches)
             {
                 // 메인 브랜치
-                if (branch.title == "main")
+                if (branch.title == "main" || branch.title == "master")
                     main = branch;
                 // 기타 브랜치
                 else

@@ -70,6 +70,18 @@ public class PathManager : MonoBehaviour
         }
     }
 
+    // 튜토리얼용 폴더 지정
+    public void SetGitDirectory()
+    {
+        if (OpenDialog.ShowDialog() == DialogResult.OK)
+        {
+            if (OpenDialog.SelectedPath != null)
+                repositoryPath = OpenDialog.SelectedPath;
+        }
+
+        CMDworker.engine.StartEngine();
+    }
+
     // 깃 경로 탐색
     public void RepositorySearch()
     {
