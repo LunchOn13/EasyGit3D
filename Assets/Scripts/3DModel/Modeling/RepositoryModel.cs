@@ -76,7 +76,10 @@ namespace Model
         public void CheckPull()
         {
             if (!PathManager.openRepositoryPossible) return;
-            
+
+            stagePanel.GetComponent<StageManager>().ClearStageList();
+            ClearAllModels();
+
             GetStatusData();
 
             // Pull할 사항이 존재
@@ -135,15 +138,20 @@ namespace Model
                         {
                             branchName = current.Trim();
                             branchName = branchName.Remove(0, 7);
+                            break;
                         }
 
                         if (!current.Contains("origin/") && !current.Contains("HEAD"))
+                        {
                             branchName = current.Trim();
+                            break;
+                        }
 
                         if (current.Contains("HEAD ->"))
                         {
                             branchName = current.Trim().Remove(0, 8);
                             checkout = true;
+                            break;
                         }
                     }
 

@@ -67,6 +67,11 @@ namespace Model
             repository = _repository;
         }
 
+        public RepositoryModel GetRepository()
+        {
+            return repository;
+        }
+
         public void SaveOriginalMaterial()
         {
             if (isDragObject) return;
@@ -228,6 +233,7 @@ namespace Model
             while (!CMDworker.engine.output.IsReadable())
                 yield return null;
 
+            Debug.Log(repository);
             repository.RefreshViewModels();
             gameObject.SetActive(false);
         }

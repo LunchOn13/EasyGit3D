@@ -14,20 +14,29 @@ namespace Model
         [SerializeField] Text commit;
         [SerializeField] RepositoryModel repository;
 
-        public void CommitAndPushFiles()
-        {
-            StartCoroutine(CommitAndPush());
-        }
-
-        private IEnumerator CommitAndPush()
+        public void TutorialCommitAndPushFiles()
         {
             GitFunction.Commit(commit.text);
             while (!CMDworker.engine.output.IsReadable())
-                yield return null;
+            { }
+
+            GitFunction.TutorialPush();
+            while (!CMDworker.engine.output.IsReadable())
+            { }
+
+            repository.RefreshViewModels();
+            gameObject.SetActive(false);
+        }
+
+        public void CommitAndPushFiles()
+        {
+            GitFunction.Commit(commit.text);
+            while (!CMDworker.engine.output.IsReadable())
+            { }
 
             GitFunction.Push();
             while (!CMDworker.engine.output.IsReadable())
-                yield return null;
+            { }
 
             repository.RefreshViewModels();
             gameObject.SetActive(false);

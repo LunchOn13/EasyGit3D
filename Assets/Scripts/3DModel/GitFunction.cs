@@ -106,6 +106,12 @@ namespace Model
             { }
         }
 
+        public static void TutorialPush()
+        {
+            InputManager.OutputControl("git push -u origin main" + "\n");
+            CMDworker.input("git push -u origin main");
+        }
+
         public void MakeSampleFile()
         {
             InputManager.OutputControl("touch sample.txt\n");

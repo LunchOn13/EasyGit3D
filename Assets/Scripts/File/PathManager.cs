@@ -64,7 +64,7 @@ public class PathManager : MonoBehaviour
                 {
                     openRepositoryPossible = true;
                     warningText.SetActive(false);
-                    SavePath(save, path);
+                    //SavePath(save, path);
                 }
             }
         }
@@ -86,6 +86,11 @@ public class PathManager : MonoBehaviour
     public void RepositorySearch()
     {
         FileSearch(repositorySavePath, ref repositoryPath);
+    }
+
+    public void SetOpenRepositoryPossible(bool flag)
+    {
+        openRepositoryPossible = flag;
     }
 
     public void CheckRepositoryLoading()

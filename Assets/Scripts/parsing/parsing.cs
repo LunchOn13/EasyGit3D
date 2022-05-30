@@ -134,6 +134,10 @@ public class parsing {
             count++;
             string[] tmp = theLine.Split(' ');
 
+            if (tmp[0] != "#") break;
+
+            Debug.Log(theLine);
+
             switch(count)
             {
                 case 1:

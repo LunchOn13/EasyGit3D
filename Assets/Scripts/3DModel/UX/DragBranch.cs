@@ -29,6 +29,7 @@ namespace Model
             
             dragObject = Instantiate(gameObject);
             dragBranchModel = dragObject.GetComponent<BranchModel>();
+            dragBranchModel.SetRepository(branchModel.GetRepository());
             dragBranchModel.SetIsDragObject(true);
             dragObject.GetComponent<DragBranch>().enabled = false;
 
