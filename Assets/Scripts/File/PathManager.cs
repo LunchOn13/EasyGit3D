@@ -15,7 +15,7 @@ public class PathManager : MonoBehaviour
     VistaFolderBrowserDialog OpenDialog;
 
     // 파일 정보 저장 경로
-    private string repositorySavePath;
+    //private string repositorySavePath;
 
     public static bool openRepositoryPossible = false;
     public static string repositoryPath = "";
@@ -25,11 +25,9 @@ public class PathManager : MonoBehaviour
 
     private void Start()
     {
-        repositorySavePath = UnityEngine.Application.persistentDataPath + "\\repository.text";
+        //repositorySavePath = UnityEngine.Application.persistentDataPath + "\\repository.text";
         OpenDialog = new VistaFolderBrowserDialog();
-
-        if (LoadPath(repositorySavePath, ref repositoryPath))
-            openRepositoryPossible = true;
+        openRepositoryPossible = false;
     }
 
     // 경로 정보 불러오기
@@ -49,7 +47,7 @@ public class PathManager : MonoBehaviour
         File.WriteAllText(save, path);
     }
 
-    public void FileSearch(string save, ref string path)
+    public void FileSearch(ref string path)
     {
         if (openRepositoryPossible) return;
 
@@ -85,7 +83,7 @@ public class PathManager : MonoBehaviour
     // 깃 경로 탐색
     public void RepositorySearch()
     {
-        FileSearch(repositorySavePath, ref repositoryPath);
+        FileSearch(ref repositoryPath);
     }
 
     public void SetOpenRepositoryPossible(bool flag)
