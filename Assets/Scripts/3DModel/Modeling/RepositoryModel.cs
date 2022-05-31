@@ -94,6 +94,11 @@ namespace Model
             if (!PathManager.openRepositoryPossible) return;
             CMDworker.engine.StartEngine();
         }
+        
+        public void StopGitProcess()
+        {
+            CMDworker.engine.StopEngine();
+        }
 
         public void RefreshViewModels()
         {
@@ -138,13 +143,15 @@ namespace Model
                         {
                             branchName = current.Trim();
                             branchName = branchName.Remove(0, 7);
-                            break;
+                            if (branchName == "master" || branchName == "main")
+                                break;
                         }
 
                         if (!current.Contains("origin/") && !current.Contains("HEAD"))
                         {
                             branchName = current.Trim();
-                            break;
+                            if(branchName == "master" || branchName == "main")
+                                break;
                         }
 
                         if (current.Contains("HEAD ->"))
@@ -214,6 +221,12 @@ namespace Model
                 // 기타 브랜치
                 else
                     develop.Add(branch);
+            }
+
+            if (main == null)
+            {
+                main = repositoryData.branches[0];
+                develop.RemoveAt(0);
             }
 
             angle = 180 / (develop.Count + 1);

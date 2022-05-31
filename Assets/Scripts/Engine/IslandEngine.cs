@@ -95,12 +95,8 @@ public class IslandEngine
     {
         SetInfo();
         bash.Start();
-        
         bash.BeginOutputReadLine();
-
-        // 에러 읽기 ( Progress 읽기 )
         bash.BeginErrorReadLine();
-        UnityEngine.Debug.Log("start error read line");
 
         WriteInput("pwd");
         while (!output.IsReadable())
@@ -133,7 +129,6 @@ public class IslandEngine
     public void StopEngine()
     {
         writer.Close();
-        bash.Close();
     }
     /**
      * 
@@ -164,7 +159,6 @@ To github.com:LunchOn13/Swimming_on_git.git
             //UnityEngine.Debug.Log(outLine.Data);
             if (outLine.Data == "EOF")
             {
-                UnityEngine.Debug.Log("set isReadable !!!");
                 output.setIsOutput();
             }
             else

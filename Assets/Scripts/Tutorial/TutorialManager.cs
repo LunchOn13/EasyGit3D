@@ -95,5 +95,10 @@ namespace Model
                     break;
             }
         }
+
+        public void QuitApplication()
+        {
+            Application.Quit();
+        }
     }
 }
