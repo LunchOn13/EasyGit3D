@@ -42,6 +42,9 @@ public class InputManager : MonoBehaviour
             ConductInput();
             input.text = "";
         }
+
+        if (CMDworker.engine.output.IsReadable())
+            CMDworker.output();
     
         if (isUpdateScroll)
         {

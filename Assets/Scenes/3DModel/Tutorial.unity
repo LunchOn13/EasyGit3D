@@ -1605,7 +1605,7 @@ RectTransform:
   - {fileID: 1814916997}
   - {fileID: 1723121364}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 33
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1877,7 +1877,7 @@ RectTransform:
   m_Children:
   - {fileID: 694986109}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 34
+  m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -2965,6 +2965,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 7526123505103739142}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 2006841438}
         m_MethodName: SetActive
         m_Mode: 6
@@ -3934,7 +3945,7 @@ RectTransform:
   - {fileID: 56313346}
   - {fileID: 2012399863}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 32
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5544,6 +5555,8 @@ MonoBehaviour:
   status4: {fileID: 2006841438}
   branch2: {fileID: 1918908015}
   status5: {fileID: 1578665381}
+  remoteGuide: {fileID: 1095694281}
+  branchButton: {fileID: 0}
   repositoryModel: {fileID: 821778609}
 --- !u!114 &821778617
 MonoBehaviour:
@@ -5746,6 +5759,7 @@ RectTransform:
   - {fileID: 1032043941}
   - {fileID: 1265112308}
   - {fileID: 1181330778}
+  - {fileID: 1095694282}
   - {fileID: 1280462739}
   - {fileID: 2027356664}
   - {fileID: 1453640050}
@@ -7744,6 +7758,86 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1090055218}
   m_CullTransparentMesh: 0
+--- !u!1 &1095694281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1095694282}
+  - component: {fileID: 1095694284}
+  - component: {fileID: 1095694283}
+  m_Layer: 0
+  m_Name: Remote Guide
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1095694282
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095694281}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 834650594}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 668, y: 164}
+  m_SizeDelta: {x: 1261.6523, y: 166.69952}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1095694283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095694281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 40
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: '
+
+    git remote add origin {github url}'
+--- !u!222 &1095694284
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095694281}
+  m_CullTransparentMesh: 0
 --- !u!1 &1110842461
 GameObject:
   m_ObjectHideFlags: 0
@@ -8444,6 +8538,17 @@ MonoBehaviour:
           m_StringArgument: git remote add origin
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1095694281}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1181330777}
         m_MethodName: SetActive
         m_Mode: 6
@@ -8613,7 +8718,7 @@ RectTransform:
   - {fileID: 1342165106}
   - {fileID: 769559587}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 28
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -8877,7 +8982,7 @@ RectTransform:
   - {fileID: 370437670}
   - {fileID: 865515132}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -10250,7 +10355,7 @@ RectTransform:
   - {fileID: 2051900424}
   - {fileID: 427191032}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -11300,7 +11405,7 @@ RectTransform:
   - {fileID: 979852017}
   - {fileID: 1234024717}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 30
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -11933,7 +12038,7 @@ RectTransform:
   - {fileID: 781013228}
   - {fileID: 1517159425}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 35
+  m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -13010,7 +13115,7 @@ RectTransform:
   - {fileID: 1482728017}
   - {fileID: 337314083}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -13291,7 +13396,7 @@ RectTransform:
   - {fileID: 632318869}
   - {fileID: 1398171034}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 29
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -13586,7 +13691,7 @@ RectTransform:
   - {fileID: 472798132}
   - {fileID: 952672986}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -13781,7 +13886,7 @@ RectTransform:
   - {fileID: 1693944700}
   - {fileID: 1221407120}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -13896,7 +14001,7 @@ RectTransform:
   - {fileID: 1817757236}
   - {fileID: 885347045}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14407,7 +14512,7 @@ RectTransform:
   - {fileID: 1580233910}
   - {fileID: 1644583708}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 31
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14525,7 +14630,7 @@ RectTransform:
   - {fileID: 188233824}
   - {fileID: 1658708638}
   m_Father: {fileID: 834650594}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -15993,7 +16098,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7526123505103739143
 RectTransform:
   m_ObjectHideFlags: 0
