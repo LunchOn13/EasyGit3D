@@ -233,7 +233,6 @@ namespace Model
             while (!CMDworker.engine.output.IsReadable())
                 yield return null;
 
-            Debug.Log(repository);
             repository.RefreshViewModels();
             gameObject.SetActive(false);
         }

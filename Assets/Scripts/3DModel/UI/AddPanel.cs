@@ -95,6 +95,8 @@ namespace Model
 
             addButton.enabled = false;
             addAllButton.enabled = false;
+            addButton.GetComponent<Image>().raycastTarget = false;
+            addAllButton.GetComponent<Image>().raycastTarget = false;
 
             rect.sizeDelta = Vector2.zero;
         }
@@ -135,6 +137,8 @@ namespace Model
 
             addButton.enabled = true;
             addAllButton.enabled = true;
+            addButton.GetComponent<Image>().raycastTarget = true;
+            addAllButton.GetComponent<Image>().raycastTarget = true;
 
             yield return null;
         }

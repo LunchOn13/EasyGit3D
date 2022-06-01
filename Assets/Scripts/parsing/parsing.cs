@@ -136,8 +136,6 @@ public class parsing {
 
             if (tmp[0] != "#") break;
 
-            Debug.Log(theLine);
-
             switch(count)
             {
                 case 1:
