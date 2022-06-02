@@ -62,14 +62,9 @@ namespace Model
             // 변경사항 있으면 체크아웃 불가
             if (statusList.Count > 0) return;
 
-            StartCoroutine(Checkout());
-        }
-
-        public IEnumerator Checkout()
-        {
             GitFunction.Checkout(focus);
             while (!CMDworker.engine.output.IsReadable())
-                yield return null;
+            { }
             RefreshViewModels();
         }
 

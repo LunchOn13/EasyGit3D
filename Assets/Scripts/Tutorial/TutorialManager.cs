@@ -22,6 +22,8 @@ namespace Model
         [SerializeField] GameObject branch2;
         [SerializeField] GameObject status5;
 
+        [SerializeField] GameObject remoteGuide;
+
         [SerializeField] RepositoryModel repositoryModel;
 
         private string mission;
@@ -67,6 +69,7 @@ namespace Model
 
                 case "git remote add origin":
                     GitFunction.TutorialCommit();
+                    remoteGuide.SetActive(false);
                     repositoryModel.RefreshViewModels();
                     status1.SetActive(true);
                     break;

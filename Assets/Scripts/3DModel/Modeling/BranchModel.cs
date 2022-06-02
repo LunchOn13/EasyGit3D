@@ -215,27 +215,22 @@ namespace Model
         public bool TryMerge()
         {
             if (!mergePossible) return false;
-            
-            StartCoroutine(MergeBranch());
-            return true;
-        }
 
-        public IEnumerator MergeBranch()
-        {
-            if(mergeEndBranch != RepositoryModel.checkout)
+            if (mergeEndBranch != RepositoryModel.checkout)
             {
                 GitFunction.Checkout(mergeEndBranch);
                 while (!CMDworker.engine.output.IsReadable())
-                    yield return null;
+                { }
             }
 
             GitFunction.Merge(mergeStartBranch);
             while (!CMDworker.engine.output.IsReadable())
-                yield return null;
+            { }
 
-            Debug.Log(repository);
             repository.RefreshViewModels();
             gameObject.SetActive(false);
+
+            return true;
         }
 
         private void OnMouseDown()
